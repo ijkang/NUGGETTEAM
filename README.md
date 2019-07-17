@@ -1,6 +1,6 @@
 # WJTEAM
 김원준 정진우 손소연 강인지
-##### ['출처:https://heropy.blog/2017/09/30/markdown/'](https://heropy.blog/2017/09/30/markdown/)
+##### ['readme.md 사용법 :https://heropy.blog/2017/09/30/markdown/'](https://heropy.blog/2017/09/30/markdown/)
 
 제목 1 
 ======================
