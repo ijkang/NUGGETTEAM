@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         outputStream = new FileOutputStream(file);
                         outputStream.write(bytes);
-                        Log.d(TAG, "파일명:"+file.getName());
+                        Log.d(TAG, file.getName());
                         Log.d(TAG, "파일저장 성공");
                     }finally {
                         if(outputStream != null)
