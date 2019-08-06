@@ -43,9 +43,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     private Button btnCapture;
     private TextureView textureView;
 
@@ -96,16 +98,20 @@ public class MainActivity extends AppCompatActivity {
         textureView = (TextureView) findViewById(R.id.textureView);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
+
         btnCapture = (Button)findViewById(R.id.btnCapture);
         btnCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, "촬영버튼클릭 시작");
                 takePicture();
+                Log.d(TAG, "촬영버튼클릭 종료");
             }
         });
     }
 
     private void takePicture() {
+        Log.d(TAG, "사진찍기 시작");
         if(cameraDevice == null)
             return;
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
@@ -135,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             // check orientation base on device
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATION.get(rotation));
-
+            Log.d(TAG, "파일 저장 시작");
             file = new File(Environment.getExternalStorageDirectory()+"/pi"+UUID.randomUUID().toString()+".jpg");
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
@@ -168,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         outputStream = new FileOutputStream(file);
                         outputStream.write(bytes);
+                        Log.d(TAG, "파일명:"+file.getName());
+                        Log.d(TAG, "파일저장 성공");
                     }finally {
                         if(outputStream != null)
                             outputStream.close();
@@ -204,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
+        Log.d(TAG, "사진찍기 종료");
     }
 
     private void createCameraPreview() {
