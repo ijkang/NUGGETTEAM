@@ -1,0 +1,8 @@
+폴더명/title/Desc.
+
+190730_Android_example/안드로이드 레이아웃 스터디/웹페이지연결,전화걸기 버튼 연습
+190805_Android_camera/카메라 api 호출/카메라 연동 예제
+190805_Android_example2/카메라 api 호출/카메라 연동 예제
+190812_Android_camera2/카메라 api 호출/카메라 연동 예제(에러없이 카메라 호출)
+190813_imagefromServer/서버연결/서버로부터 이미지 불러오기
+190827_OpenCV/opencv글자인식/서버연동없는 opencv예제
