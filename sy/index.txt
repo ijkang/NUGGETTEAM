@@ -6,3 +6,4 @@
 190812_Android_camera2	/카메라 api 호출		/카메라 연동 예제(에러없이 카메라 호출)
 190813_imagefromServer	/서버연결			/서버로부터 이미지 불러오기
 190827_OpenCV		/opencv글자인식		/서버연동없는 opencv예제
+190830_getpost_exam	/mysql연동		/안드로이드-mySQL연동예제(이름, 나라)
