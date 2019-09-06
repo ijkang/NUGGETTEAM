@@ -1,1 +1,4 @@
 CHANGE
+<190906> 
+android <->server get, post 예제(php내 python 실행, encording 해결)
+ ㄴ AWS 파일: car_non.py / carHttp.php / 1.jpg // 앱 코드 내 ip변경 후 테스트
