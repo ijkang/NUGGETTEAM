@@ -35,6 +35,7 @@ import static android.app.ProgressDialog.show;
 
 public class RegisterActivity<setPositiveButton> extends AppCompatActivity {
 
+    private static final String TAG = "RegisterActivity";
 
     private android.app.AlertDialog dialog;
 
@@ -46,6 +47,8 @@ public class RegisterActivity<setPositiveButton> extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e(TAG, "onCreate started in RegisterActivity");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
@@ -89,6 +92,7 @@ public class RegisterActivity<setPositiveButton> extends AppCompatActivity {
 
         addCarInfo();
 
+        Log.e(TAG, "onCreate ended in RegisterActivity");
     }
 
     // delete 박스
@@ -189,7 +193,6 @@ public class RegisterActivity<setPositiveButton> extends AppCompatActivity {
             textView4.setBackgroundColor(rowColor);
 
             //
-
             linearLayoutTemp.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         scrollView.addView(linearLayoutTemp);

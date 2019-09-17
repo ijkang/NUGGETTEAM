@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:stretchColumns="*">
 
-
         <TableRow
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
@@ -38,7 +37,6 @@
                 android:textStyle="bold"
                 android:text="Select"
                 android:background="#A9A9A9"/>
-
 
             <TextView
                 android:id="@+id/번호"
@@ -65,10 +63,8 @@
                 android:text="Memo"
                 android:textStyle="bold"
                 android:background="#A9A9A9"/>
-
-
-
         </TableRow>
+
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -84,5 +80,3 @@
             android:orientation="vertical" />
 
 </LinearLayout>
-
-

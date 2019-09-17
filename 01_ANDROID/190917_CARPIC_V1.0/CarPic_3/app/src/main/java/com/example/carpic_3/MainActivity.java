@@ -19,11 +19,13 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Looper;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -42,11 +44,17 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,7 +65,6 @@ import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
-
 
     // btnCapture 촬영버튼
     private Button btnCapture;
@@ -75,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         ORIENTATIONS.append(Surface.ROTATION_180,270);
         ORIENTATIONS.append(Surface.ROTATION_270,180);
     }
-
 
     private String cameraId;
     private CameraDevice cameraDevice;
@@ -108,22 +114,19 @@ public class MainActivity extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onError(@NonNull CameraDevice cameraDevice, int i) {
-            cameraDevice.close();
-            cameraDevice=null;
+            if(cameraDevice != null) {
+                cameraDevice.close();
+                cameraDevice = null;
+            }
         }
     };
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e(TAG, "onCreate started in MainActivity");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
 
         textureView = (TextureView)findViewById(R.id.textureView);
 
@@ -133,12 +136,11 @@ public class MainActivity extends AppCompatActivity {
         btnList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
-                MainActivity.this.startActivity(registerIntent);
+            Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+            MainActivity.this.startActivity(registerIntent);
             }
         });
         //
-
 
         // 촬영버튼 눌렀을 때, 촬영됨
         btnCapture = (Button)findViewById(R.id.btnCapture);
@@ -146,18 +148,19 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                takePicture();
-                //
-                //get post 넣기?
+            takePicture();
+            //
+            //get post 넣기?
 
-                // 촬영버튼 눌렀을 때, 다이얼로그 뜸  carInfoDialog 다이얼로그 명칭
-                carInfoDialog("get car number");
+            // kanginji server
+            Log.e(TAG, "MakeNetworkCall.execute in MainActivity");
+            new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?getcarnum=1", "Get");
+
+            // 촬영버튼 눌렀을 때, 다이얼로그 뜸  carInfoDialog 다이얼로그 명칭
+            //carInfoDialog("get car number");
             }
         });
-
-
         //
-
     }
 
     // 촬영버튼 팝업 만들기
@@ -206,13 +209,17 @@ public class MainActivity extends AppCompatActivity {
 //
 */
 // get post 후에 String으로 받아서 넣으면 될듯? //
+    public void carInfoDialog(String carNumber) {
 
-    private void carInfoDialog(String carNumber) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
 
-        final AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("인식 결과")
-                .setMessage(carNumber )
-                .setPositiveButton("차량등록", new DialogInterface.OnClickListener() {
+        dialog.setTitle("인식 결과");
+        dialog.setMessage(carNumber);
+        // EditText 삽입하기
+        final EditText et = new EditText(MainActivity.this);
+        dialog.setView(et);
+
+        dialog.setPositiveButton("차량등록", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -227,30 +234,27 @@ public class MainActivity extends AppCompatActivity {
 
                         Log.d(TAG,"촬영버튼 조회화면 이동");
                     }
-                })
+                });
 
-                .setNegativeButton("재촬영", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton("재촬영", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getApplicationContext(), "재촬영", Toast.LENGTH_LONG).show();
                     }
 
-                })
-                .setNeutralButton("취소",null)
-                .show();
+                });
+        dialog.setNeutralButton("취소",null);
+        dialog.show();
 
         Log.d(TAG,"재촬영");
 
     }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void takePicture() {
         Log.d(TAG, "takePicture Start");
 
         // 카메라 저장 부분
-
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
         {
             ActivityCompat.requestPermissions(this,new String[]{
@@ -511,5 +515,168 @@ public class MainActivity extends AppCompatActivity {
         mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
     }
 
+// 2019.09.17 add =>
+    String str = null;
+    InputStream ByGetMethod(String ServerURL) {
+        Log.e(TAG, "ByGetMethod started in MainActivity");
 
+        InputStream DataInputStream = null;
+        try {
+            URL url = new URL(ServerURL);
+            HttpURLConnection cc = (HttpURLConnection)url.openConnection();
+            cc.setReadTimeout(5000);
+            cc.setConnectTimeout(5000);
+            cc.setRequestMethod("GET");
+            cc.setDoInput(true);
+            cc.connect();
+
+            int response = cc.getResponseCode();
+            Log.e(TAG, "ByGetMethod started in MainActivity, response = " + response);
+            if (response == HttpURLConnection.HTTP_OK) {
+                DataInputStream = cc.getInputStream();
+                Log.e(TAG, "ByGetMethod, DataInputStream = " + DataInputStream);
+
+                int i;
+                StringBuffer buffer = new StringBuffer();
+                byte[] b = new byte[1024];
+                while( (i = DataInputStream.read(b)) != -1) {
+                    buffer.append(new String(b, 0, i));
+                }
+                str = buffer.toString();
+                Handler mHandler = new Handler(Looper.getMainLooper());
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        carInfoDialog(str);
+                    }
+                }, 0);
+                Log.e(TAG, "ByGetMethod, str = " + str);
+            }
+            else {
+                Log.e(TAG, "ByGetMethod, response = " + response);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error in ByGetMethod, e = " + e);
+        }
+
+        Log.e(TAG, "ByGetMethod ended in HttpExampleActivity");
+
+        return DataInputStream;
+    }
+
+    InputStream ByPostMethod(String ServerURL) {
+
+        Log.e(TAG, "ByPostMethod started in HttpExampleActivity");
+
+        InputStream DataInputStream = null;
+        try {
+            //String PostParam = "first_name=dong&last_name=gam";
+            String PostParam = "first_name=soyun&last_name=son";
+
+            URL url = new URL(ServerURL);
+
+            HttpURLConnection cc = (HttpURLConnection)url.openConnection();
+            if(cc == null) {
+                Log.e(TAG, "ByPostMethod, cc is null");
+            }
+            cc.setReadTimeout(5000);
+            cc.setConnectTimeout(5000);
+            cc.setRequestMethod("POST");
+            cc.setDoInput(true);
+            cc.connect();
+
+            DataOutputStream dos = new DataOutputStream(cc.getOutputStream());
+            dos.writeBytes(PostParam);
+            dos.flush();
+            dos.close();
+
+            int response = cc.getResponseCode();
+
+            if (response == HttpURLConnection.HTTP_OK) {
+                DataInputStream = cc.getInputStream();
+            }
+            else {
+                Log.e(TAG, "ByPostMethod, response = " + response);
+            }
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error in PostData, error = " + e);
+        }
+
+        Log.e(TAG, "ByPostMethod ended in HttpExampleActivity");
+
+        return DataInputStream;
+    }
+
+    String ConvertStreamToString(InputStream stream) {
+        InputStreamReader isr = new InputStreamReader(stream);
+        BufferedReader reader = new BufferedReader(isr);
+        StringBuilder response = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Error in ConvertStreamToString, error = " + e);
+        } catch (Exception e) {
+            Log.e(TAG, "Error in ConvertStreamToString", e);
+        } finally {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                Log.e(TAG, "Error in ConvertStreamToString", e);
+            } catch (Exception e) {
+                Log.e(TAG, "Error in ConvertStreamToString", e);
+            }
+        }
+
+        return response.toString();
+    }
+
+    public void DisplayMessage(String a) {
+        //TxtResult = (TextView) findViewById(R.id.response);
+        //TxtResult.setText(a);
+    }
+
+    private class MakeNetworkCall extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            DisplayMessage("Please Wait ...");
+        }
+
+        @Override
+        protected String doInBackground(String... arg) {
+            InputStream is = null;
+            String URL = arg[0];
+            Log.e(TAG, "doInBackground started in MainActivity, URL: " + URL);
+            String res = "";
+
+            Log.e(TAG, "doInBackground, arg[1] = " + arg[1]);
+            if (arg[1].equals("Post")) {
+                is = ByPostMethod(URL);
+            } else if (arg[1].equals("Get")) {
+                is = ByGetMethod(URL);
+            } else {
+                Log.e(TAG, "doInBackground, do nothing, arg[1] = " + arg[1]);
+            }
+
+            if (is != null) {
+                res = ConvertStreamToString(is);
+            } else {
+                res = "Something went wrong";
+            }
+            return res;
+        }
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            //DisplayMessage(result);
+            Log.e(TAG, "onPostExecute, result: " + result);
+        }
+    }
+// 2019.09.17 add <=
 }
