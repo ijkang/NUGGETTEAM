@@ -12,6 +12,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("촬영", "완료3" );
                     Uri providerURI = FileProvider.getUriForFile(this, getPackageName(), photoFile);
                     imageUri = providerURI;
+
                     Log.d("촬영", "완료4`" );
                     // 인텐트에 전달할 때는 FileProvier의 Return값인 content://로만!!, providerURI의 값에 카메라 데이터를 넣어 보냄
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, providerURI);
@@ -142,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 카메라 전용 크랍
+
+    //백업
     public void cropImage(){
         Log.i("cropImage", "Call");
         Log.i("cropImage", "photoURI : " + photoURI + " / albumURI : " + albumURI);
@@ -152,8 +157,8 @@ public class MainActivity extends AppCompatActivity {
         cropIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         cropIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         cropIntent.setDataAndType(photoURI, "image/*");
-        //cropIntent.putExtra("outputX", 200); // crop한 이미지의 x축 크기, 결과물의 크기
-        //cropIntent.putExtra("outputY", 200); // crop한 이미지의 y축 크기
+        cropIntent.putExtra("outputX", 200); // crop한 이미지의 x축 크기, 결과물의 크기
+        cropIntent.putExtra("outputY", 200); // crop한 이미지의 y축 크기
         cropIntent.putExtra("aspectX", 1); // crop 박스의 x축 비율, 1&1이면 정사각형
         cropIntent.putExtra("aspectY", 1); // crop 박스의 y축 비율
         cropIntent.putExtra("scale", true);

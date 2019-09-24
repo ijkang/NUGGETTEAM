@@ -2,6 +2,10 @@ package com.example.img2sv_murge;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -62,10 +67,47 @@ public class UploadFile extends AsyncTask<String, String, String> {
         } else {
             String success = "Success";
             Log.i(TAG, "sourceFile(" + fileName + ") is A File");
+
+            // 원활한 업로드를 위한 이미지 리사이즈 성공?
+            Bitmap srcBmp = BitmapFactory.decodeFile(fileName);
+            int iWidth   = 520;   // 축소시킬 너비
+            int iHeight  = 520;   // 축소시킬 높이
+            float fWidth  = srcBmp.getWidth();
+            float fHeight = srcBmp.getHeight();
+
+// 원하는 널이보다 클 경우의 설정
+            if(fWidth > iWidth) {
+                float mWidth = (float) (fWidth / 100);
+                float fScale = (float) (iWidth / mWidth);
+                fWidth *= (fScale / 100);
+                fHeight *= (fScale / 100);
+
+// 원하는 높이보다 클 경우의 설정
+            }else if (fHeight > iHeight) {
+                float mHeight = (float) (fHeight / 100);
+                float fScale = (float) (iHeight / mHeight);
+                fWidth *= (fScale / 100);
+                fHeight *= (fScale / 100);
+            }
+            FileOutputStream fosObj = null;
+
+            try {
+                // 리사이즈 이미지 동일파일명 덮어 쒸우기 작업
+                Bitmap resizedBmp = Bitmap.createScaledBitmap(srcBmp, (int)fWidth, (int)fHeight, true);
+                fosObj = new FileOutputStream(fileName);
+                resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
+                fosObj.flush();
+                fosObj.close();
+            } catch (Exception e){
+                ;
+            }
+            //여까지
+
             try {
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
                 URL url = new URL(strings[0]);
                 Log.i("strings[0]", strings[0]);
+
 
                 // Open a HTTP  connection to  the URL
                 conn = (HttpURLConnection) url.openConnection();
