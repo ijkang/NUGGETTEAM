@@ -818,23 +818,25 @@ public class MainActivity extends AppCompatActivity {
 
             if (response == HttpURLConnection.HTTP_OK) {
                 DataInputStream = cc.getInputStream();
-                int i;
-                StringBuffer buffer = new StringBuffer();
-                byte[] b = new byte[1024];
-                while( (i = DataInputStream.read(b)) != -1) {
-                    buffer.append(new String(b, 0, i));
-                }
-                str = buffer.toString();
-                Handler mHandler = new Handler(Looper.getMainLooper());
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        carInfoDialog(str);
-                    }
-                }, 0);
-//                if(mHandler !=null) {mHandler.removeMessages(0);}
-                // TODO: 2019-09-30 핸들러 종료 아직 못함 
-                Log.e(TAG, "ByGetMethod, str = " + str);
+                // 핸들러 시작
+//                int i;
+//                StringBuffer buffer = new StringBuffer();
+//                byte[] b = new byte[1024];
+//                while( (i = DataInputStream.read(b)) != -1) {
+//                    buffer.append(new String(b, 0, i));
+//                }
+//                str = buffer.toString();
+//                Handler mHandler = new Handler(Looper.getMainLooper());
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        carInfoDialog(str);
+//                    }
+//                }, 0);
+////                if(mHandler !=null) {mHandler.removeMessages(0);}
+//                // TODO: 2019-09-30 핸들러 종료 아직 못함
+                // 핸들러 끝
+//                Log.e(TAG, "ByGetMethod, str = " + str);
             }
             else {
                 Log.e(TAG, "ByPostMethod, response = " + response);
@@ -918,8 +920,11 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
+            carInfoDialog(result);
+            Log.e(TAG, "onPostExecute, result: "+result);
+
             //DisplayMessage(result);
-            Log.e(TAG, "onPostExecute, result: " + result);
+
         }
     } // 2019.09.17 add <=
 

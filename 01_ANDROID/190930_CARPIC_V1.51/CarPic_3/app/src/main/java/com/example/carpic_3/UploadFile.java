@@ -69,7 +69,7 @@ public class UploadFile extends AsyncTask<String, String, String> {
             String success = "Success";
             Log.i(TAG, "sourceFile(" + fileName + ") is A File");
 
-//            // 이미지 리사이징
+            // 이미지 리사이징
 //            Bitmap srcBmp = BitmapFactory.decodeFile(fileName);
 //            int iWidth   = 520;         // 축소시킬 너비
 //            int iHeight  = 520;         // 축소시킬 높이
@@ -101,7 +101,8 @@ public class UploadFile extends AsyncTask<String, String, String> {
 //                fosObj.close();
 //            } catch (Exception e){
 //                ;
-//            } // 덮어쓰기 끝 **리사이징 보류**
+//            }
+            // 덮어쓰기 끝 **리사이징 보류**
 
             try {
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
