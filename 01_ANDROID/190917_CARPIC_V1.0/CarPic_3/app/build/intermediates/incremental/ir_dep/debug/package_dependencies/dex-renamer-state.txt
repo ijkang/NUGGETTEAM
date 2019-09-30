@@ -1,0 +1,4 @@
+#Thu Sep 19 17:44:21 KST 2019
+base.0=C\:\\Users\\user\\Documents\\GitHub\\NUGGETTEAM\\01_ANDROID\\190917_CARPIC_V1.0\\CarPic_3\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\10
+path.0=classes.dex
+renamed.0=classes.dex
