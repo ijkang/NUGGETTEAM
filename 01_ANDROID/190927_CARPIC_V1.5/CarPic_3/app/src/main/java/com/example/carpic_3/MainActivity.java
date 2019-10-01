@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
     private TextureView textureView;
     private static final String TAG = "MainActivity";
 
+    private Button btnOpenCV;
+
     // btnList : 조회버튼
     private Button btnList;
 
