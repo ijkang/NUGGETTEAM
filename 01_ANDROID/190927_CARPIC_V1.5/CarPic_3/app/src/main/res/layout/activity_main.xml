@@ -8,13 +8,13 @@
 
     <!--촬영화면 view-->
     <!--<TextureView-->
-        <!--android:id="@+id/textureView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_above="@+id/buttons"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_marginBottom="0dp"-->
-        <!--android:layout_alignParentLeft="true" />-->
+    <!--android:id="@+id/textureView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_above="@+id/buttons"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_marginBottom="0dp"-->
+    <!--android:layout_alignParentLeft="true" />-->
 
     <LinearLayout
         android:id="@+id/buttons"

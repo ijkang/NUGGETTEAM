@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--검색 영역-->
+    <SearchView
+        android:id="@+id/search_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/temp">
+    </SearchView>
+
+    <!--삭제 버튼-->
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/temp"
+        android:text="Delete" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop="10dp">
+
+            <!--체크박스-->
+            <TextView
+                android:id="@+id/search_box"
+                android:layout_column="0"
+                android:padding="10dp"
+                android:layout_span="2"
+                android:textStyle="bold"
+                android:text="Select"
+                android:background="#A9A9A9"/>
+
+            <!--(컬럼1) 차 번호-->
+            <TextView
+                android:id="@+id/번호"
+                android:layout_column="1"
+                android:padding="10dp"
+                android:layout_span="2"
+                android:text="Car_Number"
+                android:textStyle="bold"
+                android:background="#A9A9A9"/>
+
+            <!--(컬럼2) 날짜-->
+            <TextView
+                android:id="@+id/search_date"
+                android:layout_column="2"
+                android:padding="10dp"
+                android:layout_span="2"
+                android:text="Date"
+                android:textStyle="bold"
+                android:background="#A9A9A9"/>
+
+            <!--(컬럼3) 메모-->
+            <TextView
+                android:id="@+id/search_memo"
+                android:layout_column="3"
+                android:padding="10dp"
+                android:layout_span="2"
+                android:text="Memo"
+                android:textStyle="bold"
+                android:background="#A9A9A9"/>
+        </TableRow>
+
+        <!--스크롤 view-->
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ScrollView>
+
+    </TableLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+</LinearLayout>

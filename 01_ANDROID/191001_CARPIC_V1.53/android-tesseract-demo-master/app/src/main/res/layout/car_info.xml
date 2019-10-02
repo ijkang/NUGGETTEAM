@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*">
+        <TableRow
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/car_info_row">
+
+            <CheckBox
+                android:id="@+id/car_info_checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#808080"
+                android:clickable="true"/>
+
+            <TextView
+                android:id="@+id/car_info_number"
+                android:layout_column="1"
+                android:padding="10dp"
+                android:layout_span="2"
+                android:textStyle="bold"
+                android:background="#A9A9A9"/>
+
+            <TextView
+                android:id="@+id/car_info_date"
+                android:layout_column="2"
+                android:padding="10dp"
+                android:layout_span="2"
+                android:textStyle="bold"
+                android:background="#A9A9A9"/>
+
+            <TextView
+                android:id="@+id/car_info_memo"
+                android:layout_column="3"
+                android:padding="10dp"
+                android:layout_span="2"
+                android:textStyle="bold"
+                android:background="#A9A9A9"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
