@@ -2,6 +2,10 @@ package jy.demo.tesseract.android;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,6 +13,9 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -64,6 +71,32 @@ public class UploadFile extends AsyncTask<String, String, String> {
             String success = "Success";
             Log.i(TAG, "sourceFile(" + fileName + ") is A File");
 
+            //회전값 받기
+            ExifInterface exif = null;
+            try {
+                exif = new ExifInterface(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            int exifOrientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            int exifDegree = exifOrientationToDegrees(exifOrientation);
+            //회전값 끝
+            //회전값 적용 후 저장
+            Bitmap bitmap = BitmapFactory.decodeFile(fileName);
+            Matrix matrix = new Matrix();
+            matrix.postRotate(exifDegree);
+            Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            //learn content provider for more info
+            FileOutputStream os = null;
+            try {
+                os = new FileOutputStream(fileName);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            bmp.compress(Bitmap.CompressFormat.JPEG,100,os);
+            //저장 끝
             // 이미지 리사이징
 //            Bitmap srcBmp = BitmapFactory.decodeFile(fileName);
 //            int iWidth   = 520;         // 축소시킬 너비
@@ -194,4 +227,16 @@ public class UploadFile extends AsyncTask<String, String, String> {
         super.onPostExecute(s);
         Log.e(TAG, "UploadFile End");
     }
+    //이미지 회전 메소드
+    public int exifOrientationToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
+    }
+    //회전메소드 끝
 }
