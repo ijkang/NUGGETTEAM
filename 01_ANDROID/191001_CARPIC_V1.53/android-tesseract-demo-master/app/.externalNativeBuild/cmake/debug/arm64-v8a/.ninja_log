@@ -1,7 +1,0 @@
-# ninja log v5
-1	543	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	816e92f96dc821f4
-546	732	0	C:/Users/user/Documents/GitHub/NUGGETTEAM/01_ANDROID/191001_CARPIC_V1.53/android-tesseract-demo-master/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	8fb3fe30609a2306
-2	441	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	816e92f96dc821f4
-441	593	0	C:/Users/user/Documents/GitHub/NUGGETTEAM/01_ANDROID/191001_CARPIC_V1.53/android-tesseract-demo-master/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	8fb3fe30609a2306
-2	345	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	816e92f96dc821f4
-346	458	0	C:/Users/user/Documents/GitHub/NUGGETTEAM/01_ANDROID/191001_CARPIC_V1.53/android-tesseract-demo-master/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	8fb3fe30609a2306
