@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_cars"
+        android:icon="@drawable/ic_if_sedan_285810"
+        android:title="@string/title_cars" />
+
+    <item
+        android:id="@+id/navigation_favorites"
+        android:icon="@drawable/ic_if_star_134222"
+        android:title="@string/title_favorites" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_if_settings_115801"
+        android:title="@string/title_settings" />
+
+</menu>

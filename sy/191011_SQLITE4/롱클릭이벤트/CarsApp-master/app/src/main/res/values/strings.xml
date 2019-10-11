@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">CarsApp</string>
+
+    <string name="title_cars">Cars</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_details">Car details</string>
+
+    <string name="msg_no_cars">Sorry, no car to display</string>
+    <string name="action_settings">Settings</string>
+    <string name="activity_title_home">Notes</string>
+
+    <string name="lbl_new_car_title">New Car</string>
+    <string name="lbl_edit_car_title">Edit Car</string>
+    <string name="lbl_favorite">Favorite</string>
+
+    <string name="hint_enter_manuf">Manufacturer</string>
+    <string name="hint_enter_model">Model</string>
+    <string name="hint_enter_year">Year</string>
+    <string name="hint_enter_price">Price</string>
+    <string name="hint_enter_engine">Engine</string>
+    <string name="hint_enter_transmission">Transmission</string>
+    <string name="hint_enter_description">Description</string>
+    <string name="hint_enter_imgurl">Image url</string>
+    <string name="hint_enter_favorite">Favorite</string>
+
+    <string name="empty_string"></string>
+</resources>

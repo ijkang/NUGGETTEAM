@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#455399</color>
+    <color name="colorPrimaryDark">#455399</color>
+    <color name="colorAccent">#00C6AE</color>
+    <color name="white">#FFF</color>
+    <color name="grey">#666</color>
+    <color name="msg_no_cars">#999</color>
+    <color name="hint_enter_car">#89C3C3C3</color>
+    <color name="car_list_text">#232323</color>
+</resources>
