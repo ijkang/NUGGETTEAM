@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/buttons"
             android:layout_alignTop="@+id/buttons"
+            android:background="@drawable/round_button"
             android:layout_weight="6"
             android:backgroundTint="#263238"
             android:text="LIST" />
@@ -42,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/buttons"
+            android:background="@drawable/round_button"
             android:layout_weight="6"
             android:backgroundTint="#263238"
             android:text="CAPTURE" />
@@ -53,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/buttons"
+            android:background="@drawable/round_button"
             android:layout_weight="6"
             android:backgroundTint="#263238"
             android:text="OPENCV" />

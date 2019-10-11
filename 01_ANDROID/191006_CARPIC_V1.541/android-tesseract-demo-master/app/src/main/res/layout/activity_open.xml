@@ -38,6 +38,7 @@
             android:layout_margin="0dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:background="@drawable/round_button2"
             android:text="텍스트 인식" />
     </FrameLayout>
 

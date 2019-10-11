@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: C:\\Users\\J\\AndroidStudioProjects\\190930_CARPIC_V1.54\\android-tesseract-demo-master\\opencv\\java\\src\\org\\opencv\\engine\\OpenCVEngineInterface.aidl
+ * Original file: C:\\Users\\user\\Documents\\GitHub\\NUGGETTEAM\\01_ANDROID\\191006_CARPIC_V1.541\\android-tesseract-demo-master\\opencv\\java\\src\\org\\opencv\\engine\\OpenCVEngineInterface.aidl
  */
 package org.opencv.engine;
 /**

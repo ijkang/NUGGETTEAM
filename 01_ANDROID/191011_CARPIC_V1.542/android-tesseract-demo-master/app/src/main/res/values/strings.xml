@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Android_Tesseract_Demo</string>
+    <string name="ocr_result_tip"></string>
+</resources>
