@@ -1,0 +1,17 @@
+# ninja log v5
+1	650	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	504f8524af6acea1
+652	972	0	C:/Users/user/AndroidStudioProjects/191006_CARPIC_V1.541/android-tesseract-demo-master/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so	ac3e8fa05954403f
+4	1801	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	504f8524af6acea1
+1801	2150	0	C:/Users/user/AndroidStudioProjects/191006_CARPIC_V1.541/android-tesseract-demo-master/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so	ac3e8fa05954403f
+3	616	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	504f8524af6acea1
+616	774	0	C:/Users/user/AndroidStudioProjects/191006_CARPIC_V1.541/android-tesseract-demo-master/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so	ac3e8fa05954403f
+4	680	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	504f8524af6acea1
+681	847	0	C:/Users/user/AndroidStudioProjects/191006_CARPIC_V1.541/android-tesseract-demo-master/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so	ac3e8fa05954403f
+3	628	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	504f8524af6acea1
+628	770	0	C:/Users/user/AndroidStudioProjects/191006_CARPIC_V1.541/android-tesseract-demo-master/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so	ac3e8fa05954403f
+3	600	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	504f8524af6acea1
+600	747	0	C:/Users/user/AndroidStudioProjects/191006_CARPIC_V1.541/android-tesseract-demo-master/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so	ac3e8fa05954403f
+3	680	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	504f8524af6acea1
+680	865	0	C:/Users/user/AndroidStudioProjects/191006_CARPIC_V1.541/android-tesseract-demo-master/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so	ac3e8fa05954403f
+3	659	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	504f8524af6acea1
+659	825	0	C:/Users/user/AndroidStudioProjects/191006_CARPIC_V1.541/android-tesseract-demo-master/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so	ac3e8fa05954403f
