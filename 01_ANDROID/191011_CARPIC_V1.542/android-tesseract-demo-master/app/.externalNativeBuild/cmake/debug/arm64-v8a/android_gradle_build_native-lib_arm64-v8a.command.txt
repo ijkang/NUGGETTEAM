@@ -1,8 +1,0 @@
-Executable : C:\Users\user\AppData\Local\Android\Sdk\cmake\3.6.4111459\bin\cmake.exe
-arguments : 
---build
-C:\Users\user\AndroidStudioProjects\191006_CARPIC_V1.541\android-tesseract-demo-master\app\.externalNativeBuild\cmake\debug\arm64-v8a
---target
-native-lib
-jvmArgs : 
-

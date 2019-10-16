@@ -1,7 +1,0 @@
-#Internal package file, do not edit.
-#Tue Oct 01 10:39:41 KST 2019
-0.baseType=DIRECTORY
-0.base=C\:\\Users\\user\\AndroidStudioProjects\\android-tesseract-demo-master\\app\\build\\intermediates\\merged_assets\\debug\\out
-0.path=eng.traineddata
-0.set=ASSET
-count=1

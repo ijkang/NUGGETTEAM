@@ -1,3 +1,0 @@
-C:/Users/user/AndroidStudioProjects/191006_CARPIC_V1.541/android-tesseract-demo-master/app/.externalNativeBuild/cmake/debug/x86_64/CMakeFiles/native-lib.dir
-C:/Users/user/AndroidStudioProjects/191006_CARPIC_V1.541/android-tesseract-demo-master/app/.externalNativeBuild/cmake/debug/x86_64/CMakeFiles/edit_cache.dir
-C:/Users/user/AndroidStudioProjects/191006_CARPIC_V1.541/android-tesseract-demo-master/app/.externalNativeBuild/cmake/debug/x86_64/CMakeFiles/rebuild_cache.dir

@@ -1,3 +1,0 @@
-C:/Users/user/Documents/GitHub/NUGGETTEAM/01_ANDROID/191006_CARPIC_V1.541/android-tesseract-demo-master/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/native-lib.dir
-C:/Users/user/Documents/GitHub/NUGGETTEAM/01_ANDROID/191006_CARPIC_V1.541/android-tesseract-demo-master/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/edit_cache.dir
-C:/Users/user/Documents/GitHub/NUGGETTEAM/01_ANDROID/191006_CARPIC_V1.541/android-tesseract-demo-master/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/rebuild_cache.dir
