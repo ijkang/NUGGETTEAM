@@ -1,0 +1,8 @@
+Executable : C:\Users\user\AppData\Local\Android\Sdk\cmake\3.6.4111459\bin\cmake.exe
+arguments : 
+--build
+C:\Users\user\AndroidStudioProjects\191015_CARPIC_V1.6\Carpic\app\.externalNativeBuild\cmake\debug\x86
+--target
+native-lib
+jvmArgs : 
+
