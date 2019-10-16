@@ -1,2 +1,0 @@
-[1/2] Building CXX object CMakeFiles/native-lib.dir/native-lib.cpp.o
-[2/2] Linking CXX shared library C:\Users\user\AndroidStudioProjects\191015_CARPIC_V1.6\Carpic\app\build\intermediates\cmake\debug\obj\x86_64\libnative-lib.so

@@ -1,3 +1,0 @@
-C:/Users/user/AndroidStudioProjects/191015_CARPIC_V1.6/Carpic/app/.externalNativeBuild/cmake/debug/x86/CMakeFiles/native-lib.dir
-C:/Users/user/AndroidStudioProjects/191015_CARPIC_V1.6/Carpic/app/.externalNativeBuild/cmake/debug/x86/CMakeFiles/edit_cache.dir
-C:/Users/user/AndroidStudioProjects/191015_CARPIC_V1.6/Carpic/app/.externalNativeBuild/cmake/debug/x86/CMakeFiles/rebuild_cache.dir
