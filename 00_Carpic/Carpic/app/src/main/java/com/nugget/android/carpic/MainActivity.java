@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //[3.다이얼로그]
-    public void carInfoDialog(String carNumber) {
+    public void carInfoDialog(final String carNumber) {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
 
@@ -243,7 +243,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG,"촬영버튼 토스트");
 
                 // 촬영버튼 클릭시 조회화면으로 이동
-                Intent registerIntent = new Intent(MainActivity.this, Car_List.class);
+                Intent registerIntent = new Intent(MainActivity.this, Car_Insert.class);
+                //차량인식값 보내기
+                registerIntent.putExtra("차번호", carNumber);
+
                 MainActivity.this.startActivity(registerIntent);
                 Log.d(TAG,"촬영버튼 조회화면 이동");
             }

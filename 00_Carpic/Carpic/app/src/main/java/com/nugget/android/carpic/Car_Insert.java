@@ -43,7 +43,12 @@ public class Car_Insert extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
         e_cardate.setText(simpleDateFormat.format(date));
         //현재시간 고정 끝
-        //차량번호 불러오는 메서드 여기에넣기
+
+        //차량 번호 받아오기
+        Intent intent = getIntent();
+        String carnumber = intent.getExtras().getString("차번호");
+        e_carnum.setText(carnumber);
+        //차량 번호 받아오기
 
 
         bt_save = (Button) findViewById(R.id.btn_save);
@@ -68,25 +73,25 @@ public class Car_Insert extends AppCompatActivity {
                 String owner = e_owner.getText().toString();
                 String carmemo = e_carmemo.getText().toString();
 
-
-                if (cardate.isEmpty() || carnum.isEmpty() || owner.isEmpty() || carmemo.isEmpty()) {
-
-                    Toast.makeText(Car_Insert.this, "Fill the form", Toast.LENGTH_SHORT).show();
-
-                } else {
-
-                    String insertSQL = "INSERT INTO CARLIST \n" +
-                            "(cardate, carnum, owner, carmemo)\n" +
-                            "VALUES \n" +
-                            "(?, ?, ?, ?);";
-
-                    //using the same method execsql for inserting values
-                    //this time it has two parameters
-                    //first is the sql string and second is the parameters that is to be binded with the query
-                    mDatabase.execSQL(insertSQL, new String[]{cardate, carnum, owner, carmemo});
-
-                    Toast.makeText(Car_Insert.this, "차량이 등록되었습니다", Toast.LENGTH_SHORT).show();
-                }
+//                //null 값 있을 시 채우라는 toast 메세지
+//                if (cardate.isEmpty() || carnum.isEmpty() || owner.isEmpty() || carmemo.isEmpty()) {
+//
+//                    Toast.makeText(Car_Insert.this, "Fill the form", Toast.LENGTH_SHORT).show();
+//
+//                } else {
+//
+//                    String insertSQL = "INSERT INTO CARLIST \n" +
+//                            "(cardate, carnum, owner, carmemo)\n" +
+//                            "VALUES \n" +
+//                            "(?, ?, ?, ?);";
+//
+//                    //using the same method execsql for inserting values
+//                    //this time it has two parameters
+//                    //first is the sql string and second is the parameters that is to be binded with the query
+//                    mDatabase.execSQL(insertSQL, new String[]{cardate, carnum, owner, carmemo});
+//
+//                    Toast.makeText(Car_Insert.this, "차량이 등록되었습니다", Toast.LENGTH_SHORT).show();
+//                }
 
 
             }
