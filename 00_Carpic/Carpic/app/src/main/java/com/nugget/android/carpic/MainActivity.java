@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         btnList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registerIntent = new Intent(MainActivity.this, Car_Insert.class);
+                Intent registerIntent = new Intent(MainActivity.this, Car_List.class);
                 MainActivity.this.startActivity(registerIntent);
             }
         }); //조회버튼 이벤트 끝

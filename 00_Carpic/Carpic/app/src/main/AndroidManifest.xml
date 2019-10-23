@@ -26,22 +26,27 @@
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
-        android:smallScreens="true" />
+        android:smallScreens="true"
+
+         />
+
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:screenOrientation="portrait"
+        android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
+
+
         <activity
             android:name="com.nugget.android.carpic.CameraSurfaceView"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
 
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity android:name="com.nugget.android.carpic.Car_List" />

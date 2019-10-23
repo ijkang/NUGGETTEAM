@@ -61,7 +61,6 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
     private Button mBtnFinish;
 
 
-
     private TextView mTextOcrResult;
 
     private Bitmap bmp_result;
@@ -154,6 +153,9 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
                     // 퍼미션 확인 후 카메라 활성화
                     if (hasPermissions(PERMISSIONS))
                         mOpenCvCameraView.enableView();
+
+
+
                 }
                 break;
                 default: {
@@ -169,11 +171,9 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //세로 고정?
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         setContentView(R.layout.activity_camerasurfaceview);
+
+
 
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -225,7 +225,6 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
         m_viewDeco.setSystemUiVisibility(m_nUIOption);
 
 
-
         mOrientEventListener = new OrientationEventListener(this,
                 SensorManager.SENSOR_DELAY_NORMAL) {
 
@@ -236,19 +235,20 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
 
                 // 0˚ (portrait)
                 if (arg0 >= 315 || arg0 < 45) {
-                    rotateViews(0);
-
+                    rotateViews(270);
+                    mCurrOrientHomeButton = mOrientHomeButton.Bottom;
                     // 90˚
                 } else if (arg0 >= 45 && arg0 < 135) {
-                    rotateViews(270);
-
+                    rotateViews(180);
+                    mCurrOrientHomeButton = mOrientHomeButton.Left;
                     // 180˚
                 } else if (arg0 >= 135 && arg0 < 225) {
-                    rotateViews(180);
-
+                    rotateViews(90);
+                    mCurrOrientHomeButton = mOrientHomeButton.Top;
                     // 270˚ (landscape)  가로고정?
                 } else {
-                    rotateViews(90);
+                    rotateViews(0);
+                    mCurrOrientHomeButton = mOrientHomeButton.Right;
                 }
 
 
@@ -264,7 +264,6 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
 
             }
         };
-
 
         //방향센서 핸들러 활성화
         mOrientEventListener.enable();
@@ -361,8 +360,9 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
                                 bmp_result = GetRotatedBitmap(bmp_result, 270);
                                 break;
                         }
-                    }
 
+
+                    }
 
                     new AsyncTess().execute(bmp_result);
                 } else {
@@ -482,6 +482,8 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
         } else {
             Log.d(TAG, "onResume :: OpenCV library found inside package. Using it!");
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+
+
         }
     }
 
@@ -539,6 +541,8 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
             sTess.setImage(bmp_result);
 
             return sTess.getUTF8Text();
+
+
         }
 
         protected void onPostExecute(String result) {
@@ -548,8 +552,14 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
             // dialog 추가....
             AlertDialog.Builder dialog = new AlertDialog.Builder(CameraSurfaceView.this);
 
+
+
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             dialog.setTitle("인식결과");
             dialog.setMessage(result);
+
+
 
             // EditText 삽입하기
             /*
@@ -562,11 +572,11 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
                 public void onClick(DialogInterface dialogInterface, int i) {
 
                     // 촬영버튼 클릭시 toast
-                    Toast.makeText(getApplicationContext(), "촬영완료", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "등록완료", Toast.LENGTH_SHORT).show();
                     Log.d(TAG,"촬영버튼 토스트");
 
                     // 촬영버튼 클릭시 조회화면으로 이동
-                    Intent registerIntent = new Intent(CameraSurfaceView.this, Car_Insert.class);
+                    Intent registerIntent = new Intent(CameraSurfaceView.this, Car_List.class);
                     CameraSurfaceView.this.startActivity(registerIntent);
                     Log.d(TAG,"촬영버튼 조회화면 이동");
                 }
