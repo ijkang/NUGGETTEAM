@@ -26,9 +26,7 @@
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
-        android:smallScreens="true"
-
-         />
+        android:smallScreens="true"/>
 
 
     <application
@@ -39,8 +37,7 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-
+        android:theme="@style/AppTheme">
 
 
         <activity
@@ -48,12 +45,11 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape"
 
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+            android:theme="@style/AppTheme" />
         <activity android:name="com.nugget.android.carpic.Car_List" />
         <activity android:name="com.nugget.android.carpic.Car_Insert" />
         <activity
             android:name="com.nugget.android.carpic.MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

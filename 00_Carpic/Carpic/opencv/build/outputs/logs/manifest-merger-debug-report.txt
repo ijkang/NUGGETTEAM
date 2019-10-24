@@ -1,12 +1,12 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-8:12
-INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-8:12
+ADDED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-9:12
+INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-9:12
+INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-9:12
+INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-9:12
+INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-9:12
+INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-9:12
+INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:2:1-9:12
 	package
 		ADDED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml:3:7-27
 		INJECTED from C:\Users\user\AndroidStudioProjects\Carpic\opencv\java\AndroidManifest.xml

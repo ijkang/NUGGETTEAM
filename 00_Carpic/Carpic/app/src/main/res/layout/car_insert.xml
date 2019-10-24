@@ -36,9 +36,10 @@
             android:id="@+id/e_cardate"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:cursorVisible="false"
             android:inputType="text"
-            android:textStyle="bold"
-            android:textColor="@color/colorDark"/>
+            android:textColor="@color/colorDark"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -60,7 +61,8 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:textStyle="bold"
-            android:textColor="@color/colorDark" />
+            android:textColor="@color/colorDark"
+            android:cursorVisible="false"/>
 
     </LinearLayout>
 
@@ -80,9 +82,10 @@
             android:id="@+id/e_owner"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:cursorVisible="true"
             android:inputType="text"
-            android:textStyle="bold"
-            android:textColor="@color/colorDark" />
+            android:textColor="@color/colorDark"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

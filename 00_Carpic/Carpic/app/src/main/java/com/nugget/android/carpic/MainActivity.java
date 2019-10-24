@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e(TAG, "onCreate started in MainActivity");
+        Log.e(TAG, "MainActivity에서 onCreate 시작!");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -222,7 +222,6 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
-
     //[3.다이얼로그]
     public void carInfoDialog(final String carNumber) {
 
@@ -230,40 +229,40 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.setTitle("인식결과");
         dialog.setMessage(carNumber);
-        // EditText 삽입하기
-        final EditText et = new EditText(MainActivity.this);
-        dialog.setView(et);
+//        // EditText 삽입하기
+//        final EditText et = new EditText(MainActivity.this);
+//        dialog.setView(et);
 
         dialog.setPositiveButton("차량등록", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                // 촬영버튼 클릭시 toast
-                Toast.makeText(getApplicationContext(), "차량등록 완료", Toast.LENGTH_LONG).show();
-                Log.d(TAG,"촬영버튼 토스트");
+                // 다이얼로그에서 "차량등록" 클릭시 toast
+                //Toast.makeText(getApplicationContext(), "차량등록 완료", Toast.LENGTH_LONG).show();
+                //Log.d(TAG,"촬영버튼 토스트");
 
-                // 촬영버튼 클릭시 조회화면으로 이동
+                // "차량등록" 클릭시 등록화면으로 이동
                 Intent registerIntent = new Intent(MainActivity.this, Car_Insert.class);
-                //차량인식값 보내기
+                // 다이얼로그에서 인식결과 insert 화면으로 보내기
                 registerIntent.putExtra("차번호", carNumber);
 
                 MainActivity.this.startActivity(registerIntent);
-                Log.d(TAG,"촬영버튼 조회화면 이동");
+                Log.d(TAG,"차량등록버튼 등록화면 이동");
             }
         });
 
         dialog.setNegativeButton("재촬영", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                captureCamera(); //재촬영 버튼 클릭시 카메라 화면으로 이동 (190927추가)
-                Toast.makeText(getApplicationContext(), "재촬영", Toast.LENGTH_LONG).show();
+                captureCamera(); //재촬영 버튼 클릭ㅊ시 카메라 화면으로 이동 (190927추가)
+                Toast.makeText(getApplicationContext(), "번호판을 다시 촬영해주세요", Toast.LENGTH_LONG).show();
             }
 
         });
         dialog.setNeutralButton("취소",null);
         dialog.show();
 
-        Log.d(TAG,"재촬영");
+        Log.d(TAG,"재촬영 실행");
 
     } //다이얼로그 끝
 
@@ -607,7 +606,7 @@ public class MainActivity extends AppCompatActivity {
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         sendBroadcast(mediaScanIntent);
-        Toast.makeText(this, "사진이 앨범에 저장되었습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "잠시만 기다려주세요", Toast.LENGTH_SHORT).show();
     }
 
 //    //1-5 이미지 CROP **크롭안씀**
@@ -659,7 +658,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("REQUEST_TAKE_PHOTO", e.toString());
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "사진찍기를 취소하였습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "번호판 촬영을 취소했습니다", Toast.LENGTH_SHORT).show();
                 }
                 break;
 

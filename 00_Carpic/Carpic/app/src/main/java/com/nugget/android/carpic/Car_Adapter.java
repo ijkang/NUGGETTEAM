@@ -68,7 +68,7 @@ public class Car_Adapter extends ArrayAdapter<Car_Info> {
             }
         });
 
-        //the delete operation
+        //리스트에서 삭제
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +80,7 @@ public class Car_Adapter extends ArrayAdapter<Car_Info> {
                         String sql = "DELETE FROM CARLIST WHERE id = ?";
                         mDatabase.execSQL(sql, new Integer[]{car.getId()});
                         reloadCarsFromDatabase();
+                        Toast.makeText(mCtx, "삭제되었습니다", Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -96,6 +97,7 @@ public class Car_Adapter extends ArrayAdapter<Car_Info> {
         return view;
     }
 
+    //리스트에서 수정
     private void updateCar(final Car_Info car) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mCtx);
 
@@ -118,26 +120,26 @@ public class Car_Adapter extends ArrayAdapter<Car_Info> {
         final AlertDialog dialog = builder.create();
         dialog.show();
 
-        // CREATE METHOD FOR EDIT THE FORM
+        // 리스트 수정을 위한 메소드 생성
         view.findViewById(R.id.buttonUpdateCar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String cardate = editTextcardate.getText().toString().trim();
                 String carnum = editcarnum.getText().toString().trim();
-                String owner = editowner.getText().toString().trim();
-                String carmemo = editmemo.getText().toString().trim();
+                String owner = editowner.getText().toString();
+                String carmemo = editmemo.getText().toString();
 
-                if (cardate.isEmpty()) {
-                    editTextcardate.setError("날짜를 입력해주세요");
-                    editTextcardate.requestFocus();
-                    return;
-                }
-
-                if (owner.isEmpty()) {
-                    editowner.setError("소유주를 입력해주세요");
-                    editowner.requestFocus();
-                    return;
-                }
+//                if (cardate.isEmpty()) {
+//                    editTextcardate.setError("날짜를 입력해주세요");
+//                    editTextcardate.requestFocus();
+//                    return;
+//                }
+//
+//                if (owner.isEmpty()) {
+//                    editowner.setError("소유주를 입력해주세요");
+//                    editowner.requestFocus();
+//                    return;
+//                }
 
                 String sql = "UPDATE CARLIST \n" +
                         "SET cardate = ?, \n" +
@@ -147,9 +149,8 @@ public class Car_Adapter extends ArrayAdapter<Car_Info> {
                         "WHERE id = ?;\n";
 
                 mDatabase.execSQL(sql, new String[]{cardate, carnum, owner, carmemo, String.valueOf(car.getId())});
-                Toast.makeText(mCtx, "수정완료", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mCtx, "수정되었습니다", Toast.LENGTH_SHORT).show();
                 reloadCarsFromDatabase();
-
                 dialog.dismiss();
             }
         });

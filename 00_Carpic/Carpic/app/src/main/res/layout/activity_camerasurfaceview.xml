@@ -3,19 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
-
-
+    android:layout_height="fill_parent"
+    tools:context="com.nugget.android.carpic.CameraSurfaceView">
 
 
     <org.opencv.android.JavaCameraView
         android:id="@+id/activity_surface_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-
-        />
+        android:layout_height="match_parent"        />
 
 
     <!--ROI 영역-->
@@ -34,9 +29,6 @@
        />
 
 
-
-
-
     <!--Start 및 뒤로가기 버튼-->
     <Button
         android:id="@+id/btn_ocrstart"
@@ -44,7 +36,7 @@
         android:layout_height="80dp"
         android:background="@drawable/round_button"
         android:onClick="onClickButton"
-        android:text="Start"
+        android:text="촬영"
         android:textColor="#FFB144"
         android:textSize="15dp"
         android:layout_alignParentRight="true"
@@ -75,16 +67,9 @@
         android:textColor="@android:color/holo_red_dark"
         android:textSize="20dp" />
 
-
-
     <ImageView
         android:id="@+id/image_capture"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-
-
-
-        />
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

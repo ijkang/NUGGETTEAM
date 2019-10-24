@@ -40,7 +40,8 @@
             android:layout_alignTop="@+id/buttons"
             android:layout_weight="6"
             android:background="@drawable/btnstyle"
-            android:text="LIST"
+            android:textColor="#FFFFFF"
+            android:text="차량조회"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"/>
 
@@ -52,7 +53,8 @@
             android:layout_alignBottom="@+id/buttons"
             android:layout_weight="6"
             android:background="@drawable/btnstyle"
-            android:text="CAPTURE"
+            android:textColor="#FFFFFF"
+            android:text="AI인식"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"/>
 
@@ -65,7 +67,8 @@
             android:layout_alignBottom="@+id/buttons"
             android:layout_weight="6"
             android:background="@drawable/btnstyle"
-            android:text="OPENCV"
+            android:textColor="#FFFFFF"
+            android:text="OCR인식"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"/>
 

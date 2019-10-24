@@ -61,37 +61,39 @@ public class Car_Insert extends AppCompatActivity {
             }
         });
 
-
         //Onclick Btn
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //Get the Enter data
-                String cardate = e_cardate.getText().toString().trim();
+                String cardate = e_cardate.getText().toString().trim(); //공백제거
                 String carnum = e_carnum.getText().toString().trim();
                 String owner = e_owner.getText().toString();
                 String carmemo = e_carmemo.getText().toString();
 
-//                //null 값 있을 시 채우라는 toast 메세지
-//                if (cardate.isEmpty() || carnum.isEmpty() || owner.isEmpty() || carmemo.isEmpty()) {
-//
-//                    Toast.makeText(Car_Insert.this, "Fill the form", Toast.LENGTH_SHORT).show();
-//
-//                } else {
-//
-//                    String insertSQL = "INSERT INTO CARLIST \n" +
-//                            "(cardate, carnum, owner, carmemo)\n" +
-//                            "VALUES \n" +
-//                            "(?, ?, ?, ?);";
-//
-//                    //using the same method execsql for inserting values
-//                    //this time it has two parameters
-//                    //first is the sql string and second is the parameters that is to be binded with the query
-//                    mDatabase.execSQL(insertSQL, new String[]{cardate, carnum, owner, carmemo});
-//
-//                    Toast.makeText(Car_Insert.this, "차량이 등록되었습니다", Toast.LENGTH_SHORT).show();
-//                }
+                //null 값 있을 시 채우라는 toast 메세지
+                if (cardate.isEmpty() || carnum.isEmpty()) {
+                //null값 들어가게 수정(191024)
+                //if (cardate.isEmpty() || carnum.isEmpty() || owner.isEmpty() || carmemo.isEmpty()) {
+                    //Toast.makeText(Car_Insert.this, "Fill the form", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    String insertSQL = "INSERT INTO CARLIST \n" +
+                            "(cardate, carnum, owner, carmemo)\n" +
+                            "VALUES \n" +
+                            "(?, ?, ?, ?);";
+
+                    //using the same method execsql for inserting values
+                    //this time it has two parameters
+                    //first is the sql string and second is the parameters that is to be binded with the query
+                    mDatabase.execSQL(insertSQL, new String[]{cardate, carnum, owner, carmemo});
+
+                    Toast.makeText(Car_Insert.this, "차량이 등록되었습니다", Toast.LENGTH_SHORT).show();
+                    Intent intent= new Intent(Car_Insert.this, Car_List.class);
+                    startActivity(intent);
+                }
 
 
             }
@@ -106,8 +108,8 @@ public class Car_Insert extends AppCompatActivity {
                 "    id INTEGER NOT NULL CONSTRAINT car_pk PRIMARY KEY AUTOINCREMENT,\n" +
                 "    cardate varchar(200) NOT NULL,\n" +
                 "    carnum varchar(200) NOT NULL,\n" +
-                "    owner varchar(200) NOT NULL,\n" +
-                "    carmemo Varchar(200) NOT NULL\n" +
+                "    owner varchar(200),\n" +
+                "    carmemo Varchar(200) \n" +
                 ");"
 
         );

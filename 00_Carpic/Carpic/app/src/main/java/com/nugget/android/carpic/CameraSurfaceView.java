@@ -545,7 +545,7 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
 
         }
 
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(final String carNumber) {
             //완료 후 버튼 속성 변경 및 결과 출력
 
 
@@ -557,7 +557,7 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
 //            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             dialog.setTitle("인식결과");
-            dialog.setMessage(result);
+            dialog.setMessage(carNumber);
 
 
 
@@ -571,14 +571,17 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 
-                    // 촬영버튼 클릭시 toast
-                    Toast.makeText(getApplicationContext(), "등록완료", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG,"촬영버튼 토스트");
+                    // 다이얼로그에서 "차량등록" 클릭시 toast
+                    //Toast.makeText(getApplicationContext(), "차량등록 완료", Toast.LENGTH_LONG).show();
+                    //Log.d(TAG,"촬영버튼 토스트");
 
-                    // 촬영버튼 클릭시 조회화면으로 이동
-                    Intent registerIntent = new Intent(CameraSurfaceView.this, Car_List.class);
+                    // "차량등록" 클릭시 등록화면으로 이동
+                    Intent registerIntent = new Intent(CameraSurfaceView.this, Car_Insert.class);
+                    // 다이얼로그에서 인식결과 insert 화면으로 보내기
+                    registerIntent.putExtra("차번호", carNumber);
+
                     CameraSurfaceView.this.startActivity(registerIntent);
-                    Log.d(TAG,"촬영버튼 조회화면 이동");
+                    Log.d(TAG,"차량등록버튼 등록화면 이동");
                 }
             });
 
@@ -599,7 +602,7 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
             // activity_open에 결과값
 
 
-            m_strOcrResult = result;
+            m_strOcrResult = carNumber;
             /*
             // 카메라 화면에 결과값
             mTextOcrResult.setText(m_strOcrResult);
