@@ -9,12 +9,6 @@ import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.CLAHE;
-import org.opencv.imgproc.Imgproc;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -29,10 +23,6 @@ import java.net.URL;
 /*[이미지전송부 Activity]*/
 public class UploadFile extends AsyncTask<String, String, String> {
 
-    private Mat originImg;
-    private Mat claheImg;
-    private Mat threshImg;
-    private CLAHE clahe;
     Context context;                // 생성자 호출 시
     ProgressDialog mProgressDialog; // 진행 상태 다이얼로그
     String fileName;                // 파일 위치
@@ -60,7 +50,6 @@ public class UploadFile extends AsyncTask<String, String, String> {
         this.sourceFile = new File(uploadFilePath);
     }
 
-
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -81,8 +70,7 @@ public class UploadFile extends AsyncTask<String, String, String> {
         } else {
             String success = "Success";
             Log.i(TAG, "sourceFile(" + fileName + ") is A File");
-            //opencv 전처리
-            openCvProc(fileName);
+
             //회전값 받기
             ExifInterface exif = null;
             try {
@@ -251,28 +239,4 @@ public class UploadFile extends AsyncTask<String, String, String> {
         return 0;
     }
     //회전메소드 끝
-    //openCV gray/CLAHE/GaussianBlur/BINARY
-    public void openCvProc(String x){
-        Log.e(TAG, "Mat 조작 시작");
-        Mat originImg = new Mat();
-        //originImg에 원본+grayscale 대입
-        originImg = Imgcodecs.imread(x,Imgcodecs.IMREAD_GRAYSCALE);
-        CLAHE clahe = Imgproc.createCLAHE();
-        Mat res = new Mat();
-        clahe.apply(originImg,res);
-        // contrast limit =2, tile size = 8X8 --hist 평탄화
-//        clahe.setTilesGridSize(new Size(8,8));
-//        clahe.setClipLimit(2.0);
-//        clahe.apply(originImg, claheImg);
-        //claheImg < originImg. 평탄화 끝.
-        Size s = new Size(5,5);
-        Imgproc.GaussianBlur(originImg, originImg, s,0, 0);
-        //originImg < claheImg. 가우시안 블러 끝
-        Imgproc.adaptiveThreshold(originImg, originImg,255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
-                Imgproc.THRESH_BINARY_INV, 19, 9);
-        //adaptiveThreshhold + binary 끝
-
-        Imgcodecs.imwrite(x, originImg );
-
-    }
 }
