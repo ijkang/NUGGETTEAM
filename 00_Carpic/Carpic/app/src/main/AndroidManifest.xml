@@ -21,6 +21,7 @@
         android:name="android.hardware.camera.front.autofocus"
         android:required="false" />
 
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -37,11 +38,19 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
+
 
 
         <activity
             android:name="com.nugget.android.carpic.CameraSurfaceView"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="landscape"
+
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.nugget.android.carpic.CameraSurfaceView2"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape"
 
