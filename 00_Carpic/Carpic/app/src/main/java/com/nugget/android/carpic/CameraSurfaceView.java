@@ -12,7 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,10 +50,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class CameraSurfaceView2 extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     private Mat img_input;
-    private static final String TAG = "AI Camera";
+    private static final String TAG = "opencv";
     private CameraBridgeViewBase mOpenCvCameraView;
     private String m_strOcrResult = "";
 
@@ -92,10 +91,6 @@ public class CameraSurfaceView2 extends Activity implements CameraBridgeViewBase
     private String datapath = "";
     private String lang = "";
 
-    // 추가테스트
-    String mCurrentPhotoPath;
-    Uri imageUri;
-    Uri photoURI, albumURI;
 
 
     // 현재 회전 상태 (하단 Home 버튼의 위치)
@@ -193,7 +188,7 @@ public class CameraSurfaceView2 extends Activity implements CameraBridgeViewBase
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.activity_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
-        mOpenCvCameraView.setCameraIndex(1); // front-camera(1),  back-camera(0)
+        mOpenCvCameraView.setCameraIndex(0); // front-camera(1),  back-camera(0)
         mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
 
         sTess = new TessBaseAPI();
@@ -260,7 +255,6 @@ public class CameraSurfaceView2 extends Activity implements CameraBridgeViewBase
                 //ROI 선 조정
                 mRelativeParams = new android.widget.RelativeLayout.LayoutParams(mRoiWidth + 5, mRoiHeight + 5);
                 mRelativeParams.setMargins(mRoiX, mRoiY, 0, 0);
-
                 mSurfaceRoiBorder.setLayoutParams(mRelativeParams);
 
                 //ROI 영역 조정
@@ -556,7 +550,7 @@ public class CameraSurfaceView2 extends Activity implements CameraBridgeViewBase
 
 
             // dialog 추가....
-            AlertDialog.Builder dialog = new AlertDialog.Builder(CameraSurfaceView2.this);
+            AlertDialog.Builder dialog = new AlertDialog.Builder(CameraSurfaceView.this);
 
 
 
@@ -582,11 +576,11 @@ public class CameraSurfaceView2 extends Activity implements CameraBridgeViewBase
                     //Log.d(TAG,"촬영버튼 토스트");
 
                     // "차량등록" 클릭시 등록화면으로 이동
-                    Intent registerIntent = new Intent(CameraSurfaceView2.this, Car_Insert.class);
+                    Intent registerIntent = new Intent(CameraSurfaceView.this, Car_Insert.class);
                     // 다이얼로그에서 인식결과 insert 화면으로 보내기
                     registerIntent.putExtra("차번호", carNumber);
 
-                    CameraSurfaceView2.this.startActivity(registerIntent);
+                    CameraSurfaceView.this.startActivity(registerIntent);
                     Log.d(TAG,"차량등록버튼 등록화면 이동");
                 }
             });
