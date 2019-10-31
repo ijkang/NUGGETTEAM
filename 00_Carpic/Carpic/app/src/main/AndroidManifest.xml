@@ -26,8 +26,7 @@
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
-        android:smallScreens="true"/>
-
+        android:smallScreens="true" />
 
     <application
         android:allowBackup="true"
@@ -36,28 +35,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="landscape"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-
-
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".NewMainActivity"></activity>
         <activity
-            android:name="com.nugget.android.carpic.CameraSurfaceView"
+            android:name=".CameraSurfaceView"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape"
-
             android:theme="@style/AppTheme" />
-        <activity android:name="com.nugget.android.carpic.Car_List" />
-        <activity android:name="com.nugget.android.carpic.Car_Insert" />
-        <activity
-            android:name="com.nugget.android.carpic.MainActivity">
+        <activity android:name=".Car_List" />
+        <activity android:name=".Car_Insert" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-
-        <!--이미지 전송에필요한Provider-->
+        </activity> <!-- 이미지 전송에필요한Provider -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}"
@@ -67,7 +61,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <!--이미지 전송에필요한Provider-->
     </application>
 
 </manifest>

@@ -110,38 +110,41 @@ public class UploadFile extends AsyncTask<String, String, String> {
             bmp.compress(Bitmap.CompressFormat.JPEG,100,os);
             //저장 끝
             // 이미지 리사이징
-//            Bitmap srcBmp = BitmapFactory.decodeFile(fileName);
-//            int iWidth   = 520;         // 축소시킬 너비
-//            int iHeight  = 520;         // 축소시킬 높이
-//            float fWidth  = srcBmp.getWidth();
-//            float fHeight = srcBmp.getHeight();
-//
-//            // 원하는 넓이보다 클 경우의 설정
-//            if(fWidth > iWidth) {
-//                float mWidth = (float) (fWidth / 100);
-//                float fScale = (float) (iWidth / mWidth);
-//                fWidth *= (fScale / 100);
-//                fHeight *= (fScale / 100);
-//
-//            // 원하는 높이보다 클 경우의 설정
-//            }else if (fHeight > iHeight) {
-//                float mHeight = (float) (fHeight / 100);
-//                float fScale = (float) (iHeight / mHeight);
-//                fWidth *= (fScale / 100);
-//                fHeight *= (fScale / 100);
-//            }
-//            FileOutputStream fosObj = null;
-//
-//            try {
-//                // 리사이징된 이미지 덮어쓰기(동일 파일명 사용)
-//                Bitmap resizedBmp = Bitmap.createScaledBitmap(srcBmp, (int)fWidth, (int)fHeight, true);
-//                fosObj = new FileOutputStream(fileName);
-//                resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
-//                fosObj.flush();
-//                fosObj.close();
-//            } catch (Exception e){
-//                ;
-//            }
+            Bitmap srcBmp = BitmapFactory.decodeFile(fileName);
+            int iWidth   = 756;         // 축소시킬 너비
+            int iHeight  = 1008;         // 축소시킬 높이
+            float fWidth  = srcBmp.getWidth();
+            float fHeight = srcBmp.getHeight();
+
+            // 원하는 넓이보다 클 경우의 설정
+            if(fWidth > iWidth) {
+                float mWidth = (float) (fWidth / 100);
+                float fScale = (float) (iWidth / mWidth);
+                fWidth *= (fScale / 100);
+                fHeight *= (fScale / 100);
+
+            // 원하는 높이보다 클 경우의 설정
+            }else if (fHeight > iHeight) {
+                float mHeight = (float) (fHeight / 100);
+                float fScale = (float) (iHeight / mHeight);
+                fWidth *= (fScale / 100);
+                fHeight *= (fScale / 100);
+            }
+            FileOutputStream fosObj = null;
+
+            try {
+                // 리사이징된 이미지 덮어쓰기(동일 파일명 사용)
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 4;
+                Bitmap orgImage = BitmapFactory.decodeFile(fileName, options);
+                Bitmap resizedBmp = Bitmap.createScaledBitmap(orgImage, (int)fWidth, (int)fHeight, true);
+                fosObj = new FileOutputStream(fileName);
+                resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
+                fosObj.flush();
+                fosObj.close();
+            } catch (Exception e){
+                ;
+            }
             // 덮어쓰기 끝 **리사이징 보류**
 
             try {
@@ -254,24 +257,29 @@ public class UploadFile extends AsyncTask<String, String, String> {
     //openCV gray/CLAHE/GaussianBlur/BINARY
     public void openCvProc(String x){
         Log.e(TAG, "Mat 조작 시작");
-        Mat originImg = new Mat();
-        //originImg에 원본+grayscale 대입
+//        Mat originImg = new Mat();
+//        //originImg에 원본+grayscale 대입
         originImg = Imgcodecs.imread(x,Imgcodecs.IMREAD_GRAYSCALE);
-        CLAHE clahe = Imgproc.createCLAHE();
-        Mat res = new Mat();
-        clahe.apply(originImg,res);
-        // contrast limit =2, tile size = 8X8 --hist 평탄화
+//        CLAHE clahe = Imgproc.createCLAHE();
+//        Mat res = new Mat();
+//        Mat k = new Mat();
+//        clahe.apply(originImg,res);
+////         contrast limit =2, tile size = 8X8 --hist 평탄화
 //        clahe.setTilesGridSize(new Size(8,8));
 //        clahe.setClipLimit(2.0);
-//        clahe.apply(originImg, claheImg);
-        //claheImg < originImg. 평탄화 끝.
-        Size s = new Size(5,5);
-        Imgproc.GaussianBlur(originImg, originImg, s,0, 0);
-        //originImg < claheImg. 가우시안 블러 끝
-        Imgproc.adaptiveThreshold(originImg, originImg,255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
-                Imgproc.THRESH_BINARY_INV, 19, 9);
-        //adaptiveThreshhold + binary 끝
-
+//        clahe.apply(originImg, originImg);
+////        claheImg < originImg. 평탄화 끝.
+//        Size s = new Size(5,5);
+//        Imgproc.GaussianBlur(originImg, originImg, s,0, 0);
+////        originImg < claheImg. 가우시안 블러 끝
+//        Imgproc.adaptiveThreshold(originImg, originImg,255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
+//                Imgproc.THRESH_BINARY_INV, 19, 9);
+////        adaptiveThreshhold + binary 끝
+////        mopology 시도
+//        Size kernel = new Size(3, 7);
+//        k = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, kernel);
+//        Imgproc.morphologyEx(originImg, originImg, Imgproc.MORPH_CLOSE, k);
+        // 컨트롤 불가 보류
         Imgcodecs.imwrite(x, originImg );
 
     }
