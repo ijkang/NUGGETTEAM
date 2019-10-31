@@ -29,11 +29,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
-import org.opencv.core.Mat;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -46,7 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /*[촬영화면 Activity]*/
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     //이미지 전송관련
     private static final int MY_PERMISSION_CAMERA = 1111;
@@ -64,6 +59,7 @@ public class MainActivity extends AppCompatActivity{
 
     // btnCapture : 촬영버튼
     private Button btnCapture;
+    private TextureView textureView;
     private static final String TAG = "MainActivity";
 
     // btnList : 조회버튼
@@ -115,40 +111,7 @@ public class MainActivity extends AppCompatActivity{
 //            }
 //        }
 //    }; //이미지파일 저장 끝
-private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
-    @Override
-    public void onManagerConnected(int status) {
-        switch (status) {
-            case LoaderCallbackInterface.SUCCESS: {
 
-                Mat originImg = new Mat();
-
-            }
-            break;
-            default: {
-                super.onManagerConnected(status);
-            }
-            break;
-        }
-    }
-};
-
-
-    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (!OpenCVLoader.initDebug()) {
-            Log.d(TAG, "onResume :: Internal OpenCV library not found.");
-            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_2_0, this, mLoaderCallback);
-        } else {
-            Log.d(TAG, "onResume :: OpenCV library found inside package. Using it!");
-            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
-
-
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.e(TAG, "MainActivity에서 onCreate 시작!");
@@ -581,7 +544,6 @@ private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
 
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
             Log.d("촬영", "완료2" );
 
             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -679,9 +641,9 @@ private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         switch (requestCode) {
             case REQUEST_TAKE_PHOTO:
-
                 if (resultCode == Activity.RESULT_OK) {
                     try {
                         Log.i("REQUEST_TAKE_PHOTO", "OK");
@@ -690,8 +652,7 @@ private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
                         uploadFile(mCurrentPhotoPath);
                         //[2.네트워크 연결] kanginji server **네트워크 추가**
                         Log.e(TAG, "MakeNetworkCall.execute in MainActivity");
-//                        new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?post=1", "Post");
-                        new MakeNetworkCall().execute("http://3.16.54.45:80/carnumrec/http.php?post=1", "Post");
+                        new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?post=1", "Post");
 
                     } catch (Exception e) {
                         Log.e("REQUEST_TAKE_PHOTO", e.toString());

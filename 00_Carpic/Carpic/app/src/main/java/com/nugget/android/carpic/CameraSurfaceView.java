@@ -188,7 +188,7 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.activity_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
-        mOpenCvCameraView.setCameraIndex(1); // front-camera(1),  back-camera(0)
+        mOpenCvCameraView.setCameraIndex(0); // front-camera(1),  back-camera(0)
         mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
 
         sTess = new TessBaseAPI();
@@ -255,7 +255,6 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
                 //ROI 선 조정
                 mRelativeParams = new android.widget.RelativeLayout.LayoutParams(mRoiWidth + 5, mRoiHeight + 5);
                 mRelativeParams.setMargins(mRoiX, mRoiY, 0, 0);
-
                 mSurfaceRoiBorder.setLayoutParams(mRelativeParams);
 
                 //ROI 영역 조정
