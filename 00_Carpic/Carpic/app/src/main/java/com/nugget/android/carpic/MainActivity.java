@@ -15,10 +15,12 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -298,7 +300,18 @@ private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
 
         });
         dialog.setNeutralButton("취소",null);
-        dialog.show();
+//        dialog.show();
+// 다이얼로그 글자키우기 , 가운데정렬
+
+        AlertDialog alert = dialog.create();
+        alert.show();
+        alert.getWindow().getAttributes();
+
+        TextView textView = (TextView) alert.findViewById(android.R.id.message);
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextSize(35);
+        Button btn1 = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        btn1.setTextSize(16);
 
         Log.d(TAG,"재촬영 실행");
 
