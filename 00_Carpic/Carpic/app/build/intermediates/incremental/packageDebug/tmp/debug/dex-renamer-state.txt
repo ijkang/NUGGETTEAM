@@ -1,10 +1,13 @@
-#Wed Oct 30 17:39:06 KST 2019
-path.2=classes_0.dex
+#Fri Nov 01 14:46:48 KST 2019
+path.3=classes.dex
+path.2=classes.dex
 path.1=classes.dex
 path.0=classes.dex
+renamed.3=classes4.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
-base.2=C\:\\Users\\J\\AndroidStudioProjects\\00.1_carpic\\Carpic\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\out
-base.1=C\:\\Users\\J\\AndroidStudioProjects\\00.1_carpic\\Carpic\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out
-base.0=C\:\\Users\\J\\AndroidStudioProjects\\00.1_carpic\\Carpic\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out
+base.3=C\:\\Users\\J\\AndroidStudioProjects\\00.1_carpic\\Carpic\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\3
+base.2=C\:\\Users\\J\\AndroidStudioProjects\\00.1_carpic\\Carpic\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\2
+base.1=C\:\\Users\\J\\AndroidStudioProjects\\00.1_carpic\\Carpic\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
+base.0=C\:\\Users\\J\\AndroidStudioProjects\\00.1_carpic\\Carpic\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0

@@ -198,6 +198,7 @@ private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
 
         // 촬영버튼 이벤트
         btnCapture = (Button)findViewById(R.id.btnCapture);
+
         btnCapture.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -750,7 +751,7 @@ private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
                 for (int i = 0; i < grantResults.length; i++) {
                     // grantResults[] : 허용된 권한은 0, 거부한 권한은 -1
                     if (grantResults[i] < 0) {
-                        Toast.makeText(MainActivity.this, "해당 권한을 활성화 하셔야 합니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "해당 권한을 활성화 하셔야 합니다.", Toast.LENGTH_LONG).show();
                         return;
                     }
                 }

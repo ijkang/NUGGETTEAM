@@ -1,20 +1,20 @@
 -- Merging decision tree log ---
 provider#androidx.core.content.FileProvider
-INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:70:9-78:20
+INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:64:9-72:20
 	android:grantUriPermissions
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:74:13-47
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:68:13-47
 	android:authorities
 		INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:72:13-51
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:66:13-51
 	android:exported
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:73:13-37
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:67:13-37
 	android:name
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:71:13-62
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:65:13-62
 manifest
-ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-82:12
-INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-82:12
-INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-82:12
-INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-82:12
+ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-76:12
+INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-76:12
+INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-76:12
+INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-76:12
 MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\J\.gradle\caches\transforms-2\files-2.1\7d03161a5f8c1c73041e8a279ccf4449\AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\J\.gradle\caches\transforms-2\files-2.1\e7cbbdd923f367f7ffc2fc78d1d8a8e1\AndroidManifest.xml:2:1-11:12
 MERGED from [:opencv] C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\opencv\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-13:12
@@ -44,20 +44,20 @@ MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\J\.gradle\cac
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\J\.gradle\caches\transforms-2\files-2.1\dfeb001cb0bbe7f66994e0971aedcd65\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\J\.gradle\caches\transforms-2\files-2.1\d8fa5ec8f84c4d22c955c8e758a4fd65\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\J\.gradle\caches\transforms-2\files-2.1\8a9ce334ebccfe96e0f37edf467db5e0\AndroidManifest.xml:17:1-22:12
-INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-82:12
-INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-82:12
-INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-82:12
+INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-76:12
+INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-76:12
+INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-76:12
 	package
 		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:3:5-40
 		INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-82:12
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-76:12
 		INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-82:12
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:1-76:12
 		INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:2:11-69
@@ -120,7 +120,7 @@ ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\Andr
 	android:anyDensity
 		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:26:9-34
 application
-ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:33:5-80:19
+ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:33:5-74:19
 MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\J\.gradle\caches\transforms-2\files-2.1\e7cbbdd923f367f7ffc2fc78d1d8a8e1\AndroidManifest.xml:9:5-20
 MERGED from [com.android.support.constraint:constraint-layout:1.1.3] C:\Users\J\.gradle\caches\transforms-2\files-2.1\e7cbbdd923f367f7ffc2fc78d1d8a8e1\AndroidManifest.xml:9:5-20
 MERGED from [androidx.core:core:1.0.1] C:\Users\J\.gradle\caches\transforms-2\files-2.1\bb3d75cc6e2a68ee61ff7dcc6b6954e4\AndroidManifest.xml:22:5-89
@@ -155,38 +155,28 @@ ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\Andr
 		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:51:13-44
 	android:name
 		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:47:13-71
-activity#com.nugget.android.carpic.CameraSurfaceView2
-ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:52:9-57:47
-	android:screenOrientation
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:55:13-50
-	android:configChanges
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:54:13-63
-	android:theme
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:57:13-44
-	android:name
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:53:13-72
 activity#com.nugget.android.carpic.Car_List
-ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:58:9-71
+ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:52:9-71
 	android:name
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:58:19-68
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:52:19-68
 activity#com.nugget.android.carpic.Car_Insert
-ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:59:9-73
+ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:53:9-73
 	android:name
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:59:19-70
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:53:19-70
 activity#com.nugget.android.carpic.MainActivity
-ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:60:9-66:20
+ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:54:9-60:20
 	android:name
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:61:13-66
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:55:13-66
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:62:13-65:29
+ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:56:13-59:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:63:17-69
+ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:57:17-69
 	android:name
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:63:25-66
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:57:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:64:17-77
+ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:58:17-77
 	android:name
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:64:27-74
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:58:27-74
 uses-sdk
 INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml
@@ -260,8 +250,8 @@ INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\A
 		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml
 meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:75:13-77:54
+ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:69:13-71:54
 	android:resource
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:77:17-51
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:71:17-51
 	android:name
-		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:76:17-67
+		ADDED from C:\Users\J\AndroidStudioProjects\00.1_carpic\Carpic\app\src\main\AndroidManifest.xml:70:17-67

@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Canvas;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -27,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -188,7 +190,7 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.activity_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
-        mOpenCvCameraView.setCameraIndex(1); // front-camera(1),  back-camera(0)
+        mOpenCvCameraView.setCameraIndex(0); // front-camera(1),  back-camera(0)
         mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
 
         sTess = new TessBaseAPI();
@@ -610,6 +612,4 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
             */
         }
     }
-
-
 }

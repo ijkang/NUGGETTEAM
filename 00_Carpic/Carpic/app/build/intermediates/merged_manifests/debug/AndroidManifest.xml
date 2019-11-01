@@ -43,16 +43,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="landscape"
         android:supportsRtl="true"
-        android:testOnly="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
         <activity
             android:name="com.nugget.android.carpic.CameraSurfaceView"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name="com.nugget.android.carpic.CameraSurfaceView2"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
