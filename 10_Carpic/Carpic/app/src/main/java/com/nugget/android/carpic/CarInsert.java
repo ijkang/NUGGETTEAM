@@ -3,7 +3,6 @@ package com.nugget.android.carpic;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,13 +14,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CarInsert extends AppCompatActivity {
-
-    private static final String LOG_TAG = CarInsert.class.getSimpleName();
-
     EditText e_cardate, e_carnum, e_owner, e_carmemo;
     Button bt_save, viewdatall;
     public static final String DATABASe_cardate = "CARLIST.db";
     SQLiteDatabase mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +43,12 @@ public class CarInsert extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
         e_cardate.setText(simpleDateFormat.format(date));
         //현재시간 고정 끝
-        //차량번호 불러오는 메서드 여기에넣기
+
+//        //차량 번호 받아오기
+//        Intent intent = getIntent();
+//        String carnumber = intent.getExtras().getString("차번호");
+//        e_carnum.setText(carnumber);
+//        //차량 번호 받아오기
 
 
         bt_save = (Button) findViewById(R.id.btn_save);
@@ -59,20 +61,23 @@ public class CarInsert extends AppCompatActivity {
             }
         });
 
-
         //Onclick Btn
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //Get the Enter data
-                String cardate = e_cardate.getText().toString().trim();
+                String cardate = e_cardate.getText().toString().trim(); //공백제거
                 String carnum = e_carnum.getText().toString().trim();
                 String owner = e_owner.getText().toString();
                 String carmemo = e_carmemo.getText().toString();
 
-                if (cardate.isEmpty() || carnum.isEmpty() || owner.isEmpty() || carmemo.isEmpty()) {
-                    Toast.makeText(CarInsert.this, "Fill the form", Toast.LENGTH_SHORT).show();
+                //null 값 있을 시 채우라는 toast 메세지
+                if (cardate.isEmpty() || carnum.isEmpty()) {
+                    //null값 들어가게 수정(191024)
+                    //if (cardate.isEmpty() || carnum.isEmpty() || owner.isEmpty() || carmemo.isEmpty()) {
+                    //Toast.makeText(Car_Insert.this, "Fill the form", Toast.LENGTH_SHORT).show();
+
                 } else {
 
                     String insertSQL = "INSERT INTO CARLIST \n" +
@@ -86,9 +91,15 @@ public class CarInsert extends AppCompatActivity {
                     mDatabase.execSQL(insertSQL, new String[]{cardate, carnum, owner, carmemo});
 
                     Toast.makeText(CarInsert.this, "차량이 등록되었습니다", Toast.LENGTH_SHORT).show();
+                    Intent intent= new Intent(CarInsert.this, CarList.class);
+                    startActivity(intent);
                 }
+
+
             }
         });
+
+
     }
 
     private void createCarTable() {
@@ -97,20 +108,10 @@ public class CarInsert extends AppCompatActivity {
                 "    id INTEGER NOT NULL CONSTRAINT car_pk PRIMARY KEY AUTOINCREMENT,\n" +
                 "    cardate varchar(200) NOT NULL,\n" +
                 "    carnum varchar(200) NOT NULL,\n" +
-                "    owner varchar(200) NOT NULL,\n" +
-                "    carmemo Varchar(200) NOT NULL\n" +
+                "    owner varchar(200),\n" +
+                "    carmemo Varchar(200) \n" +
                 ");"
+
         );
-    }
-
-    @Override
-    protected void onResume() {
-        Log.e(LOG_TAG, "onResume started in CarList");
-        super.onResume();
-
-        //e_cardate.setText("");
-        e_carnum.setText("");
-        e_owner.setText("");
-        e_carmemo.setText("");
     }
 }

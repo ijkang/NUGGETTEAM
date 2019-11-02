@@ -1,11 +1,5 @@
 package com.nugget.android.carpic;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
@@ -35,12 +29,10 @@ import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.ExifInterface;
 import android.media.Image;
 import android.media.ImageReader;
-import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -56,12 +48,16 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -72,7 +68,6 @@ import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHolder.Callback, ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -96,9 +91,12 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     int mDSI_height, mDSI_width;
 
     private EditText mCarNumberEditView;
-    private ImageView mEditButton = null;
+    private Button mEditButton = null;
 
     String mCurrentPhotoPath;
+    private static final int REQUEST_TAKE_PHOTO = 2222;
+    private static final int REQUEST_IMAGE_CROP = 4444;
+
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
@@ -135,7 +133,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
         mCarNumberEditView = (EditText)findViewById(R.id.car_number_editview);
         mCarNumberEditView.setText("00가0000");
-        mEditButton = (ImageView)findViewById(R.id.edit_button);
+        mEditButton = (Button)findViewById(R.id.edit_button);
     }
 
     @Override
@@ -375,23 +373,40 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         }
     }
 
+    //촬영 버튼 클릭
     public void onClickCameraTakeBtn(View view) {
         Log.e(LOG_TAG, "onClickCameraTakeBtn started in RecognizerAIActivity");
         mCarNumberEditView.setText("");
         takePicture();
     }
 
-    public void onClickCameraFinishBtn(View view) {
-        Log.e(LOG_TAG, "onClickCameraFinishBtn started in RecognizerAIActivity");
+    //등록 버튼 클릭
+    public void onClickRegisterBtn(View view) {
 
-        Log.e(LOG_TAG, "MakeNetworkCall.execute in MainActivity");
-        //new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?post=1", "Post");
-        new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?get=1", "Get");
+        // "차량등록" 클릭시 등록화면으로 이동
+        Intent registerIntent = new Intent(RecognizerAIActivity.this, CarInsert.class);
+        // 인식결과 insert 화면으로 보내기
+        //registerIntent.putExtra("차번호", carNumber);
+
+        RecognizerAIActivity.this.startActivity(registerIntent);
+        Log.d(LOG_TAG,"onClickCameraFinishBtn started in RecognizerAIActivity");
     }
 
-    public void onClickCameraReTakeBtn(View view) {
-        Log.e(LOG_TAG, "onClickCameraReTakeBtn started in RecognizerAIActivity");
-    }
+
+
+//    //완료 버튼 클릭
+//    public void onClickCameraFinishBtn(View view) {
+//        Log.e(LOG_TAG, "onClickCameraFinishBtn started in RecognizerAIActivity");
+//
+//        Log.e(LOG_TAG, "MakeNetworkCall.execute in MainActivity");
+//        //new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?post=1", "Post");
+//        new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?get=1", "Get");
+//    }
+//
+//    //재촬영 버튼 클릭
+//    public void onClickCameraReTakeBtn(View view) {
+//        Log.e(LOG_TAG, "onClickCameraReTakeBtn started in RecognizerAIActivity");
+//    }
 
     public void takePreview() throws CameraAccessException {
         mPreviewBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
@@ -551,12 +566,12 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         }
     }
 
-    private String dateName(long dateTaken){
-        Date date = new Date(dateTaken);
-        SimpleDateFormat dateFormat =
-        new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
-        return dateFormat.format(date);
-    }
+//    private String dateName(long dateTaken){
+//        Date date = new Date(dateTaken);
+//        SimpleDateFormat dateFormat =
+//        new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+//        return dateFormat.format(date);
+//    }
 
     public static final String insertImage(ContentResolver cr, Bitmap source, String title, String description) {
         Log.e(LOG_TAG, "insertImage started in RecognizerAIActivity");
@@ -572,6 +587,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
         Uri url = null;
         String stringUrl = null;    /* value to be returned */
+
 
         try {
             url = cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
@@ -608,7 +624,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Toast.makeText(RecognizerAIActivity.this, "사진을 저장하였습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RecognizerAIActivity.this, "사진을 저장했습니다", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -619,7 +635,8 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            insertImage(getContentResolver(), bitmap, ""+System.currentTimeMillis(), "");
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            insertImage(getContentResolver(), bitmap, "CARPIC_" + timeStamp, "");
 
             return null;
         }
@@ -645,35 +662,66 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     }
 
     //1-3 이미지 파일 생성
-    public File createImageFile() throws IOException {
-        // 이미지 파일명 생성
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "CARPIC_" + timeStamp + ".jpg";
-        File imageFile = null;
-        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures", "CARPIC");
-
-        if (!storageDir.exists()) {
-            Log.i("mCurrentPhotoPath1", storageDir.toString());
-            storageDir.mkdirs();
-        }
-
-        imageFile = new File(storageDir, imageFileName);
-        mCurrentPhotoPath = imageFile.getAbsolutePath();
-
-        return imageFile;
-    }
-
-
-    public void uploadFile(String filePath){
-        String url = "http://3.16.54.45/imgupload.php";
-        try {
-            UploadFile uploadFile = new UploadFile(this);
-            uploadFile.setPath(filePath);
-            uploadFile.execute(url);
-        } catch (Exception e){
-            Log.e("UploadFile", String.valueOf(e));
-        }
-    }
+//    public File createImageFile() throws IOException {
+//        // 이미지 파일명 생성
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        String imageFileName = "CARPIC_" + timeStamp + ".jpg";
+//        File imageFile = null;
+//        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures", "CARPIC");
+//
+//        if (!storageDir.exists()) {
+//            Log.i("mCurrentPhotoPath1", storageDir.toString());
+//            storageDir.mkdirs();
+//        }
+//
+//        imageFile = new File(storageDir, imageFileName);
+//        mCurrentPhotoPath = imageFile.getAbsolutePath();
+//
+//        return imageFile;
+//    }
+//
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        switch (requestCode) {
+//            case REQUEST_TAKE_PHOTO:
+//
+//                if (resultCode == Activity.RESULT_OK) {
+//                    try {
+//                        Log.i("REQUEST_TAKE_PHOTO", "OK");
+//                        //galleryAddPic();
+//                        uploadFile(mCurrentPhotoPath);
+//                        Log.e(LOG_TAG, "MakeNetworkCall.execute in MainActivity");
+//                        new MakeNetworkCall().execute("http://3.16.54.45:80/carnumrec/http.php?post=1", "Post");
+//
+//                    } catch (Exception e) {
+//                        Log.e("REQUEST_TAKE_PHOTO", e.toString());
+//                    }
+//                } else {
+//                    Toast.makeText(RecognizerAIActivity.this, "번호판 촬영을 취소했습니다", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//
+//            case REQUEST_IMAGE_CROP:
+//                if (resultCode == Activity.RESULT_OK) {
+//                    //galleryAddPic();
+//                    uploadFile(mCurrentPhotoPath);
+//                }
+//                break;
+//        }
+//    }
+//
+//    public void uploadFile(String filePath){
+//        String url = "http://3.16.54.45/imgupload.php";
+//        try {
+//            UploadFile uploadFile = new UploadFile(this);
+//            uploadFile.setPath(filePath);
+//            uploadFile.execute(url);
+//        } catch (Exception e){
+//            Log.e("UploadFile", String.valueOf(e));
+//        }
+//    }
 
     // 2019.09.17 add =>
     //[2. 네트워크 연결] 상세

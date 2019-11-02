@@ -6,13 +6,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_mycar1"
+    android:background="@color/colorDark"
     tools:context=".RecognizerAIActivity">
 
+<!--    촬영부레이아웃-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="962"
+        android:layout_weight="1200"
         android:background="@drawable/bg_cam_s"
         >
 
@@ -20,7 +21,7 @@
             android:id="@+id/camera_surfaceview"
             android:layout_width="match_parent"
             android:layout_height="320dp"
-            android:layout_weight="760"
+            android:layout_weight="1200"
             />
 
         <ImageView
@@ -33,42 +34,48 @@
             />
     </FrameLayout>
 
-    <Button
-        android:id="@+id/retry_recognition"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="10dp"
         android:layout_weight="160"
-        android:background="@drawable/btn_newaccount_no"
-        />
+        android:text="번호판을 영역에 맞게 촬영해주세요"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:textColor="@color/colorBG" />
 
+    <!--인식결과 노출 부분-->
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_weight="274"
-        android:layout_height="0dp"
-        android:visibility="visible"
-        >
+        android:layout_height="100dp"
+        android:visibility="visible">
+
+        <!--인식결과 윗부분 여백-->
         <View
             android:layout_width="match_parent"
             android:layout_weight="70"
             android:layout_height="0dp"
             />
 
+        <!--인식결과-->
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_weight="134"
+            android:layout_weight="150"
             android:layout_height="0dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:visibility="visible"
-            >
+            android:visibility="visible">
+
+            <!--인식결과 왼쪽 여백-->
             <View
                 android:layout_width="0dp"
-                android:layout_weight="192"
-                android:layout_height="match_parent"
-                />
+                android:layout_weight="120"
+                android:layout_height="match_parent"/>
 
+            <!--인식결과 번호판모양-->
             <LinearLayout
                 android:id="@+id/carid_edit_view"
                 android:layout_width="0dp"
@@ -79,7 +86,7 @@
                 >
                 <View
                     android:layout_width="0dp"
-                    android:layout_weight="206"
+                    android:layout_weight="136"
                     android:layout_height="match_parent"
                     />
 
@@ -87,12 +94,12 @@
                     android:id="@+id/car_number_editview"
                     android:layout_height="match_parent"
                     android:background="#00000000"
-                    android:layout_width="0dp"
+                    android:layout_width="70dp"
                     android:layout_weight="272"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/colorBG"
                     android:gravity="center"
                     android:maxLength="8"
-                    android:textSize="18sp"
+                    android:textSize="30sp"
                     android:inputType="text"
                     android:singleLine="true"
                     android:imeOptions="actionDone"
@@ -107,19 +114,32 @@
                     android:layout_height="match_parent"
                     />
 
+                <!--등록버튼-->
                 <FrameLayout
                     android:layout_width="0dp"
-                    android:layout_weight="60"
+                    android:layout_weight="150"
                     android:layout_height="match_parent"
                     >
 
-                    <ImageView
+                    <Button
                         android:id="@+id/edit_button"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_numberedit"
-                        />
+                        android:background="@color/colorDark"
+                        android:text="등록"
+                        android:stateListAnimator="@null"
+                        android:onClick="onClickRegisterBtn"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorText" />
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/edit_button"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/ic_numberedit"-->
+<!--                        />-->
                 </FrameLayout>
 
                 <View
@@ -129,13 +149,15 @@
                     />
             </LinearLayout>
 
+            <!--인식결과 오른쪽 여백-->
             <View
                 android:layout_width="0dp"
-                android:layout_weight="192"
+                android:layout_weight="120"
                 android:layout_height="match_parent"
                 />
         </LinearLayout>
 
+        <!--인식결과 아래쪽 여백-->
         <View
             android:layout_width="match_parent"
             android:layout_weight="70"
@@ -143,40 +165,36 @@
             />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_weight="2"
-        android:layout_height="0dp"
-        >
-        <View
-            android:layout_width="0dp"
-            android:layout_weight="38"
-            android:layout_height="match_parent"
-            />
 
-        <ImageView
-            android:layout_gravity="center"
-            android:scaleType="fitXY"
-            android:layout_width="0dip"
-            android:layout_weight="1004"
-            android:layout_height="match_parent"
-            android:src="@drawable/bg_cam_line"
-            />
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_weight="2"-->
+<!--        android:layout_height="0dp"-->
+<!--        >-->
+<!--        <View-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="38"-->
+<!--            android:layout_height="match_parent"-->
+<!--            />-->
 
-        <View
-            android:layout_width="0dp"
-            android:layout_weight="38"
-            android:layout_height="match_parent"
-            />
-    </LinearLayout>
+<!--        <ImageView-->
+<!--            android:layout_gravity="center"-->
+<!--            android:scaleType="fitXY"-->
+<!--            android:layout_width="0dip"-->
+<!--            android:layout_weight="1004"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src="@drawable/bg_cam_line"-->
+<!--            />-->
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_weight="146"
-        android:layout_height="0dp"
-        />
+<!--        <View-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="38"-->
+<!--            android:layout_height="match_parent"-->
+<!--            />-->
+<!--    </LinearLayout>-->
 
+    <!--촬영버튼 부분-->
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -184,65 +202,18 @@
         android:layout_height="0dp"
         >
 
-        <View
-            android:layout_width="0dp"
-            android:layout_weight="176"
-            android:layout_height="match_parent"
-            />
-
         <!-- 촬영 -->
         <Button
             android:id="@+id/camera_take_button"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="210"
             android:onClick="onClickCameraTakeBtn"
-            android:background="@drawable/btn_camtake_s"
-            />
+            android:background="@color/colorBG"
+            android:layout_gravity="center"
+            android:text="촬영"
+            android:textSize="20sp"
+            android:textColor="@color/colorDark" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_weight="308"
-            android:layout_height="match_parent"
-            />
-
-        <!-- 완료 -->
-        <Button
-            android:id="@+id/camera_finish_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="210"
-            android:onClick="onClickCameraFinishBtn"
-            android:background="@drawable/btn_camfinish_s"
-            />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_weight="308"
-            android:layout_height="match_parent"
-            />
-
-        <!-- 재촬영 -->
-        <Button
-            android:id="@+id/camera_retake_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="210"
-            android:onClick="onClickCameraReTakeBtn"
-            android:background="@drawable/btn_camretake_s"
-            />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_weight="176"
-            android:layout_height="match_parent"
-            />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_weight="166"
-        android:layout_height="0dp"
-        />
 </LinearLayout>
-<!-- </androidx.constraintlayout.widget.ConstraintLayout> -->

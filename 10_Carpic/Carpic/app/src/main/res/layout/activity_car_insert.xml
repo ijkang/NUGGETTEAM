@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorBG"
-    tools:context="com.nugget.android.carpic.Car_Insert">
+    tools:context="com.nugget.android.carpic.CarInsert">
 
     <TextView
         android:layout_width="match_parent"
