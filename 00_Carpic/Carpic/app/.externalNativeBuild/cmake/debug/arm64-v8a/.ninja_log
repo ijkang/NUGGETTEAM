@@ -1,7 +1,5 @@
 # ninja log v5
-1	1255	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	7dae1103f79c939f
-1256	1463	0	C:/Users/J/AndroidStudioProjects/00.1_carpic/Carpic/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	bec254791707a2e3
-16	1228	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	7dae1103f79c939f
-1228	1482	0	C:/Users/J/AndroidStudioProjects/00.1_carpic/Carpic/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	bec254791707a2e3
-6	1377	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	7dae1103f79c939f
-1377	1681	0	C:/Users/J/AndroidStudioProjects/00.1_carpic/Carpic/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	bec254791707a2e3
+2	1235	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	3d9e15a5cb116833
+1237	1530	0	C:/Users/user/AndroidStudioProjects/1.71/Carpic/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	fd0e5b3810b06674
+3	562	0	CMakeFiles/native-lib.dir/native-lib.cpp.o	3d9e15a5cb116833
+562	743	0	C:/Users/user/AndroidStudioProjects/1.71/Carpic/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	fd0e5b3810b06674
