@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onButtonListClick(View v) {
         Log.e(LOG_TAG, "onButtonListClick started in MainActivity");
-        
+
         Intent registerIntent = new Intent(MainActivity.this, CarInsert.class);
         MainActivity.this.startActivity(registerIntent);
     }
