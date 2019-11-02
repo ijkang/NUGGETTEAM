@@ -3,6 +3,7 @@ package com.nugget.android.carpic;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarList extends AppCompatActivity {
+
+    private static final String LOG_TAG = CarList.class.getSimpleName();
 
     List<CarInfo> carList;
     SQLiteDatabase mDatabase;
@@ -58,5 +61,11 @@ public class CarList extends AppCompatActivity {
 
         //adding the adapter to listview
         listViewCars.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        Log.e(LOG_TAG, "onResume started in CarList");
+        super.onResume();
     }
 }
