@@ -106,17 +106,20 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
         // prepare screen
         prepareScreen();
-//
+
+        // init camera
         initCamera();
-//
 
-//        mSurfaceView = findViewById(R.id.surfaceView);
+        // init surface view and register call back
+        initSurfaceView();
 
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        // do not use
+//        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+//        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
         deviceOrientation = new DeviceOrientation();
-        
+
         mCarNumberEditView = (EditText)findViewById(R.id.car_number_editview);
         mCarNumberEditView.setText("00가0000");
         mEditButton = (ImageView)findViewById(R.id.edit_button);
@@ -127,6 +130,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         Log.e(LOG_TAG, "onResume started in RecognizerAIActivity");
         super.onResume();
 
+        // do not use
 //        mSensorManager.registerListener(deviceOrientation.getEventListener(), mAccelerometer, SensorManager.SENSOR_DELAY_UI);
 //        mSensorManager.registerListener(deviceOrientation.getEventListener(), mMagnetometer, SensorManager.SENSOR_DELAY_UI);
     }
@@ -136,6 +140,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         Log.e(LOG_TAG, "onPause started in RecognizerAIActivity");
         super.onPause();
 
+        // do not use
 //        mSensorManager.unregisterListener(deviceOrientation.getEventListener());
     }
 
@@ -420,6 +425,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
     @TargetApi(19)
     public void initCameraAndPreview() {
+        Log.e(LOG_TAG, "initCameraAndPreview started in RecognizerAIActivity");
         HandlerThread handlerThread = new HandlerThread("CAMERA2");
         handlerThread.start();
         mHandler = new Handler(handlerThread.getLooper());
