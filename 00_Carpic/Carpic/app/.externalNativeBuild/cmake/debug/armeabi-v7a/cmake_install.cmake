@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/user/AndroidStudioProjects/1.71/Carpic/app/src/main/cpp
+# Install script for directory: C:/Users/user/AndroidStudioProjects/Carpic/app/src/main/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/user/AndroidStudioProjects/1.71/Carpic/app/.externalNativeBuild/cmake/debug/armeabi-v7a/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/user/AndroidStudioProjects/Carpic/app/.externalNativeBuild/cmake/debug/armeabi-v7a/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
