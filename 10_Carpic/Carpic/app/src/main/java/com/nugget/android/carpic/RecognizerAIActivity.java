@@ -40,8 +40,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -57,10 +59,19 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHolder.Callback, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -86,6 +97,8 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
     private EditText mCarNumberEditView;
     private ImageView mEditButton = null;
+
+    String mCurrentPhotoPath;
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
@@ -318,7 +331,6 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
             return;
         }
 
-        // 작업을 위해 잠시 멈춘다
         try {
             mCamera.stopPreview();
         } catch (Exception e) {
@@ -363,19 +375,21 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         }
     }
 
-    public void onClickCameraTakeBtn(View view)
-    {
+    public void onClickCameraTakeBtn(View view) {
         Log.e(LOG_TAG, "onClickCameraTakeBtn started in RecognizerAIActivity");
+        mCarNumberEditView.setText("");
         takePicture();
     }
 
-    public void onClickCameraFinishBtn(View view)
-    {
+    public void onClickCameraFinishBtn(View view) {
         Log.e(LOG_TAG, "onClickCameraFinishBtn started in RecognizerAIActivity");
+
+        Log.e(LOG_TAG, "MakeNetworkCall.execute in MainActivity");
+        //new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?post=1", "Post");
+        new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?get=1", "Get");
     }
 
-    public void onClickCameraReTakeBtn(View view)
-    {
+    public void onClickCameraReTakeBtn(View view) {
         Log.e(LOG_TAG, "onClickCameraReTakeBtn started in RecognizerAIActivity");
     }
 
@@ -537,6 +551,13 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         }
     }
 
+    private String dateName(long dateTaken){
+        Date date = new Date(dateTaken);
+        SimpleDateFormat dateFormat =
+        new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+        return dateFormat.format(date);
+    }
+
     public static final String insertImage(ContentResolver cr, Bitmap source, String title, String description) {
         Log.e(LOG_TAG, "insertImage started in RecognizerAIActivity");
         ContentValues values = new ContentValues();
@@ -547,21 +568,23 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         // Add the date meta data to ensure the image is added at the front of the gallery
         values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis());
         values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        //Log.e(LOG_TAG, "System.currentTimeMillis() in insertImage, RecognizerAIActivity, System.currentTimeMillis() = " + System.currentTimeMillis());
 
         Uri url = null;
         String stringUrl = null;    /* value to be returned */
 
         try {
             url = cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            Log.e(LOG_TAG, "url in insertImage, RecognizerAIActivity, uri = " + url);
 
             if (source != null) {
                 OutputStream imageOut = cr.openOutputStream(url);
+                Log.e(LOG_TAG, "in insertImage, RecognizerAIActivity, stringUrl = " + url);
                 try {
                     source.compress(Bitmap.CompressFormat.JPEG, 50, imageOut);
                 } finally {
                     imageOut.close();
                 }
-
             } else {
                 cr.delete(url, null, null);
                 url = null;
@@ -575,6 +598,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
         if (url != null) {
             stringUrl = url.toString();
+            //Log.e(LOG_TAG, "in insertImage, RecognizerAIActivity, stringUrl = " + stringUrl);
         }
 
         return stringUrl;
@@ -618,5 +642,225 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     private void updateTextureViewSize(int viewWidth, int viewHeight) {
         Log.e(LOG_TAG, "updateTextureViewSize started in RecognizerAIActivity");
         mCameraSurface.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight));
+    }
+
+    //1-3 이미지 파일 생성
+    public File createImageFile() throws IOException {
+        // 이미지 파일명 생성
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "CARPIC_" + timeStamp + ".jpg";
+        File imageFile = null;
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures", "CARPIC");
+
+        if (!storageDir.exists()) {
+            Log.i("mCurrentPhotoPath1", storageDir.toString());
+            storageDir.mkdirs();
+        }
+
+        imageFile = new File(storageDir, imageFileName);
+        mCurrentPhotoPath = imageFile.getAbsolutePath();
+
+        return imageFile;
+    }
+
+
+    public void uploadFile(String filePath){
+        String url = "http://3.16.54.45/imgupload.php";
+        try {
+            UploadFile uploadFile = new UploadFile(this);
+            uploadFile.setPath(filePath);
+            uploadFile.execute(url);
+        } catch (Exception e){
+            Log.e("UploadFile", String.valueOf(e));
+        }
+    }
+
+    // 2019.09.17 add =>
+    //[2. 네트워크 연결] 상세
+    //2-1 GET입력
+    String str = null;
+
+    InputStream ByGetMethod(String ServerURL) {
+        Log.e(LOG_TAG, "ByGetMethod started in RecognizerAIActivity");
+
+        InputStream DataInputStream = null;
+        try { //서버연결
+            URL url = new URL(ServerURL);
+            HttpURLConnection cc = (HttpURLConnection)url.openConnection();
+            cc.setReadTimeout(5000);
+            cc.setConnectTimeout(5000);
+            cc.setRequestMethod("GET");
+            cc.setDoInput(true);
+            cc.connect();
+
+            int response = cc.getResponseCode();
+            Log.e(LOG_TAG, "ByGetMethod started in RecognizerAIActivity, response = " + response);
+            if (response == HttpURLConnection.HTTP_OK) {
+                DataInputStream = cc.getInputStream();
+                Log.e(LOG_TAG, "ByGetMethod, DataInputStream = " + DataInputStream);
+
+                int i;
+                StringBuffer buffer = new StringBuffer();
+                byte[] b = new byte[1024];
+                while( (i = DataInputStream.read(b)) != -1) {
+                    buffer.append(new String(b, 0, i));
+                }
+                str = buffer.toString();
+                Log.e(LOG_TAG, "ByGetMethod, str = " + str);
+                Handler mHandler = new Handler(Looper.getMainLooper());
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //carInfoDialog(str);
+                        mCarNumberEditView.setText(str);
+                    }
+                }, 0);
+                if(mHandler !=null) {mHandler.removeMessages(0);}
+            }
+            else {
+                Log.e(LOG_TAG, "ByGetMethod, response = " + response);
+            }
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Error in ByGetMethod, e = " + e);
+        }
+
+        Log.e(LOG_TAG, "ByGetMethod ended in RecognizerAIActivity");
+
+        return DataInputStream;
+    }
+
+    //2-2 post입력
+    InputStream ByPostMethod(String ServerURL) {
+        Log.e(LOG_TAG, "ByPostMethod started in RecognizerAIActivity");
+        InputStream DataInputStream = null;
+        try {
+            //String PostParam = "first_name=dong&last_name=gam";
+//            String PostParam = "first_name=soyeon&last_name=son";
+            String PostPath[] = mCurrentPhotoPath.split("/");
+            Log.i(LOG_TAG, "mCurrentPhotoPath"+mCurrentPhotoPath);
+            Log.i(LOG_TAG, "mCurrentPhotoPath"+PostPath[6]);
+            String PostParam = "path="+PostPath[6];
+            URL url = new URL(ServerURL);
+
+            HttpURLConnection cc = (HttpURLConnection)url.openConnection();
+            if(cc == null) {
+                Log.e(LOG_TAG, "ByPostMethod, cc is null");
+            }
+            cc.setReadTimeout(5000);
+            cc.setConnectTimeout(5000);
+            cc.setRequestMethod("POST");
+            cc.setDoInput(true);
+            cc.connect();
+
+            DataOutputStream dos = new DataOutputStream(cc.getOutputStream());
+            dos.writeBytes(PostParam);
+            dos.flush();
+            dos.close();
+
+            int response = cc.getResponseCode();
+
+            if (response == HttpURLConnection.HTTP_OK) {
+                DataInputStream = cc.getInputStream();
+                // 핸들러 시작
+//                int i;
+//                StringBuffer buffer = new StringBuffer();
+//                byte[] b = new byte[1024];
+//                while( (i = DataInputStream.read(b)) != -1) {
+//                    buffer.append(new String(b, 0, i));
+//                }
+//                str = buffer.toString();
+//                Handler mHandler = new Handler(Looper.getMainLooper());
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        carInfoDialog(str);
+//                    }
+//                }, 0);
+////                if(mHandler !=null) {mHandler.removeMessages(0);}
+//                // TODO: 2019-09-30 핸들러 종료 아직 못함
+                // 핸들러 끝
+//                Log.e(TAG, "ByGetMethod, str = " + str);
+            }
+            else {
+                Log.e(LOG_TAG, "ByPostMethod, response = " + response);
+            }
+
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Error in PostData, error = " + e);
+        }
+
+        Log.e(LOG_TAG, "ByPostMethod ended in HttpExampleActivity");
+
+        return DataInputStream;
+    }
+
+    //2-3 string변환
+    String ConvertStreamToString(InputStream stream) {
+        InputStreamReader isr = new InputStreamReader(stream);
+        BufferedReader reader = new BufferedReader(isr);
+        StringBuilder response = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error in ConvertStreamToString, error = " + e);
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Error in ConvertStreamToString", e);
+        } finally {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error in ConvertStreamToString", e);
+            } catch (Exception e) {
+                Log.e(LOG_TAG, "Error in ConvertStreamToString", e);
+            }
+        }
+
+        return response.toString();
+    }
+
+    private class MakeNetworkCall extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // do nothing
+        }
+
+        @Override
+        protected String doInBackground(String... arg) {
+            InputStream is = null;
+            String URL = arg[0];
+            Log.e(LOG_TAG, "doInBackground started in MainActivity, URL: " + URL);
+            String res = "";
+
+            Log.e(LOG_TAG, "doInBackground, arg[1] = " + arg[1]);
+            if (arg[1].equals("Post")) {
+                is = ByPostMethod(URL);
+            } else if (arg[1].equals("Get")) {
+                is = ByGetMethod(URL);
+            } else {
+                Log.e(LOG_TAG, "doInBackground, do nothing, arg[1] = " + arg[1]);
+            }
+
+            if (is != null) {
+                res = ConvertStreamToString(is);
+            } else {
+                res = "Something went wrong";
+            }
+            return res;
+        }
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            Log.e(LOG_TAG, "onPostExecute, result: "+ result);
+            // carInfoDialog(result);
+            // 인식 결과를 EditView에 바로 갱신
+            mCarNumberEditView.setText("");
+            mCarNumberEditView.setText(result);
+        }
     }
 }
