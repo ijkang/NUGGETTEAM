@@ -21,10 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onButtonListClick(View v) {
         Log.e(LOG_TAG, "onButtonListClick started in MainActivity");
-
-//        Log.e(TAG, "startActivity RecognizerActivity in MainActivity");
-//        Intent intent = new Intent(this, RecognizerActivity.class);
-//        startActivity(intent);
+        
+        Intent registerIntent = new Intent(MainActivity.this, CarInsert.class);
+        MainActivity.this.startActivity(registerIntent);
     }
 
     public void onButtonAIClick(View v) {

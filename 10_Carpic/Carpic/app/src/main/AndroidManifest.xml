@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".RecognizerOCRActivity"></activity>
+        <activity android:name=".CarInsert"></activity>
+        <activity android:name=".CarList" />
+        <activity android:name=".RecognizerOCRActivity" />
         <activity android:name=".RecognizerAIActivity" />
         <activity
             android:name=".MainActivity"
