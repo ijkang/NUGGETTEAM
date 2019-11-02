@@ -15,7 +15,6 @@ public class CarInfo {
         this.mmemo = mmemo;
     }
 
-
     public int getId() {
         return id;
     }

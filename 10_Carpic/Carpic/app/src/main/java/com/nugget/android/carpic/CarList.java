@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,11 +62,5 @@ public class CarList extends AppCompatActivity {
 
         //adding the adapter to listview
         listViewCars.setAdapter(adapter);
-    }
-
-    @Override
-    protected void onResume() {
-        Log.e(LOG_TAG, "onResume started in CarList");
-        super.onResume();
     }
 }
