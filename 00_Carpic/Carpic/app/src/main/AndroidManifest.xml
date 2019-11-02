@@ -49,12 +49,6 @@
             android:screenOrientation="landscape"
 
             android:theme="@style/AppTheme" />
-        <activity
-            android:name="com.nugget.android.carpic.CameraSurfaceView2"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="landscape"
-
-            android:theme="@style/AppTheme" />
         <activity android:name="com.nugget.android.carpic.Car_List" />
         <activity android:name="com.nugget.android.carpic.Car_Insert" />
         <activity
