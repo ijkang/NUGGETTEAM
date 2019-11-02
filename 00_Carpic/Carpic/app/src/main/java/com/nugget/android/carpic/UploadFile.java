@@ -261,33 +261,33 @@ public class UploadFile extends AsyncTask<String, String, String> {
     }
     //회전메소드 끝
     //openCV gray/CLAHE/GaussianBlur/BINARY
-//    public void openCvProc(String x){
-//        Log.e(TAG, "Mat 조작 시작");
-////        Mat originImg = new Mat();
-////        //originImg에 원본+grayscale 대입
-//        originImg = Imgcodecs.imread(x,Imgcodecs.IMREAD_GRAYSCALE);
-////        CLAHE clahe = Imgproc.createCLAHE();
-////        Mat res = new Mat();
-////        Mat k = new Mat();
-////        clahe.apply(originImg,res);
-//////         contrast limit =2, tile size = 8X8 --hist 평탄화
-////        clahe.setTilesGridSize(new Size(8,8));
-////        clahe.setClipLimit(2.0);
-////        clahe.apply(originImg, originImg);
-//////        claheImg < originImg. 평탄화 끝.
-////        Size s = new Size(5,5);
-////        Imgproc.GaussianBlur(originImg, originImg, s,0, 0);
-//////        originImg < claheImg. 가우시안 블러 끝
-////        Imgproc.adaptiveThreshold(originImg, originImg,255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
-////                Imgproc.THRESH_BINARY_INV, 19, 9);
-//////        adaptiveThreshhold + binary 끝
-//////        mopology 시도
-////        Size kernel = new Size(3, 7);
-////        k = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, kernel);
-////        Imgproc.morphologyEx(originImg, originImg, Imgproc.MORPH_CLOSE, k);
-//        // 컨트롤 불가 보류
-//        Imgcodecs.imwrite(x, originImg );
-//
-//    }
+    public void openCvProc(String x){
+        Log.e(TAG, "Mat 조작 시작");
+//        Mat originImg = new Mat();
+//        //originImg에 원본+grayscale 대입
+        originImg = Imgcodecs.imread(x,Imgcodecs.IMREAD_GRAYSCALE);
+//        CLAHE clahe = Imgproc.createCLAHE();
+//        Mat res = new Mat();
+//        Mat k = new Mat();
+//        clahe.apply(originImg,res);
+////         contrast limit =2, tile size = 8X8 --hist 평탄화
+//        clahe.setTilesGridSize(new Size(8,8));
+//        clahe.setClipLimit(2.0);
+//        clahe.apply(originImg, originImg);
+////        claheImg < originImg. 평탄화 끝.
+//        Size s = new Size(5,5);
+//        Imgproc.GaussianBlur(originImg, originImg, s,0, 0);
+////        originImg < claheImg. 가우시안 블러 끝
+//        Imgproc.adaptiveThreshold(originImg, originImg,255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
+//                Imgproc.THRESH_BINARY_INV, 19, 9);
+////        adaptiveThreshhold + binary 끝
+////        mopology 시도
+//        Size kernel = new Size(3, 7);
+//        k = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, kernel);
+//        Imgproc.morphologyEx(originImg, originImg, Imgproc.MORPH_CLOSE, k);
+        // 컨트롤 불가 보류
+        Imgcodecs.imwrite(x, originImg );
+
+    }
 
 }

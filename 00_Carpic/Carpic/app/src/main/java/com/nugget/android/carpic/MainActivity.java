@@ -15,12 +15,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -200,7 +198,6 @@ private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
 
         // 촬영버튼 이벤트
         btnCapture = (Button)findViewById(R.id.btnCapture);
-
         btnCapture.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -300,18 +297,7 @@ private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
 
         });
         dialog.setNeutralButton("취소",null);
-//        dialog.show();
-// 다이얼로그 글자키우기 , 가운데정렬
-
-        AlertDialog alert = dialog.create();
-        alert.show();
-        alert.getWindow().getAttributes();
-
-        TextView textView = (TextView) alert.findViewById(android.R.id.message);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(35);
-        Button btn1 = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-        btn1.setTextSize(16);
+        dialog.show();
 
         Log.d(TAG,"재촬영 실행");
 
@@ -764,7 +750,7 @@ private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
                 for (int i = 0; i < grantResults.length; i++) {
                     // grantResults[] : 허용된 권한은 0, 거부한 권한은 -1
                     if (grantResults[i] < 0) {
-                        Toast.makeText(MainActivity.this, "해당 권한을 활성화 하셔야 합니다.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "해당 권한을 활성화 하셔야 합니다.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }

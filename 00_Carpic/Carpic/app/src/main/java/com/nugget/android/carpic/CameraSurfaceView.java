@@ -11,14 +11,12 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Canvas;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.OrientationEventListener;
 import android.view.SurfaceView;
 import android.view.View;
@@ -29,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -61,7 +58,7 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
     private String m_strOcrResult = "";
 
     private Button mBtnOcrStart;
-
+    private Button mBtnFinish;
 
 
     private TextView mTextOcrResult;
@@ -191,7 +188,7 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.activity_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
-        mOpenCvCameraView.setCameraIndex(0); // front-camera(1),  back-camera(0)
+        mOpenCvCameraView.setCameraIndex(1); // front-camera(1),  back-camera(0)
         mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
 
         sTess = new TessBaseAPI();
@@ -206,7 +203,7 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
 
         //뷰 선언
         mBtnOcrStart = (Button) findViewById(R.id.btn_ocrstart);
-
+        mBtnFinish = (Button) findViewById(R.id.btn_finish);
 
         mTextOcrResult = (TextView) findViewById(R.id.text_ocrresult);
 
@@ -386,21 +383,21 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
                 break;
 
 
-//            // 뒤로 버튼 클릭 시
-//            case R.id.btn_finish:
-//                //인식 결과물을 MainActivity에 전달하고 종료
-//                Intent intent = getIntent();
-//                intent.putExtra("STRING_OCR_RESULT", m_strOcrResult);
-//                setResult(RESULT_OK, intent);
-//                mOpenCvCameraView.disableView();
-//                finish();
-//                break;
+            // 뒤로 버튼 클릭 시
+            case R.id.btn_finish:
+                //인식 결과물을 MainActivity에 전달하고 종료
+                Intent intent = getIntent();
+                intent.putExtra("STRING_OCR_RESULT", m_strOcrResult);
+                setResult(RESULT_OK, intent);
+                mOpenCvCameraView.disableView();
+                finish();
+                break;
         }
     }
 
     public void rotateViews(int degree) {
         mBtnOcrStart.setRotation(degree);
-
+        mBtnFinish.setRotation(degree);
         mTextOcrResult.setRotation(degree);
 
         switch (degree) {
@@ -590,17 +587,7 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
             });
 
             dialog.setNeutralButton("취소",null);
-//            dialog.show();
-
-            AlertDialog alert = dialog.create();
-            alert.show();
-            alert.getWindow().getAttributes();
-
-            TextView textView = (TextView) alert.findViewById(android.R.id.message);
-            textView.setGravity(Gravity.CENTER);
-            textView.setTextSize(35);
-            Button btn1 = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-            btn1.setTextSize(16);
+            dialog.show();
 
             Log.d(TAG,"재촬영");
 
@@ -623,4 +610,6 @@ public class CameraSurfaceView extends Activity implements CameraBridgeViewBase.
             */
         }
     }
+
+
 }
