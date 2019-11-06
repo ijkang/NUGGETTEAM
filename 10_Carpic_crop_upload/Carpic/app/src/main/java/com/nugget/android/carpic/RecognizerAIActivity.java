@@ -494,8 +494,9 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
                 buffer.get(bytes);
                 save(bytes); //파일저장
                 uploadFile(mCurrentPhotoPath); //업로드
-                Toast.makeText(RecognizerAIActivity.this, "사진을 저장했습니다", Toast.LENGTH_SHORT).show();
-                new MakeNetworkCall().execute("http://3.16.54.45:80/carnumrec/http.php?post=1", "Post");
+
+//                new MakeNetworkCall().execute("http://3.16.54.45:80/carnumrec/http.php?post=1", "Post"); //Main.py
+                new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?post=1", "Post"); //car_non.py
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -728,41 +729,6 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         mCameraSurface.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight));
     }
 
-    //1-3 이미지 파일 생성
-//
-//
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode) {
-//            case REQUEST_TAKE_PHOTO:
-//
-//                if (resultCode == Activity.RESULT_OK) {
-//                    try {
-//                        Log.i("REQUEST_TAKE_PHOTO", "OK");
-//                        //galleryAddPic();
-//                        uploadFile(mCurrentPhotoPath);
-//                        Log.e(LOG_TAG, "MakeNetworkCall.execute in MainActivity");
-//                        new MakeNetworkCall().execute("http://3.16.54.45:80/carnumrec/http.php?post=1", "Post");
-//
-//                    } catch (Exception e) {
-//                        Log.e("REQUEST_TAKE_PHOTO", e.toString());
-//                    }
-//                } else {
-//                    Toast.makeText(RecognizerAIActivity.this, "번호판 촬영을 취소했습니다", Toast.LENGTH_SHORT).show();
-//                }
-//                break;
-//
-//            case REQUEST_IMAGE_CROP:
-//                if (resultCode == Activity.RESULT_OK) {
-//                    //galleryAddPic();
-//                    uploadFile(mCurrentPhotoPath);
-//                }
-//                break;
-//        }
-//    }
-//
     public void uploadFile(String filePath){
         String url = "http://3.16.54.45/imgupload.php";
         try {
@@ -860,25 +826,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
             if (response == HttpURLConnection.HTTP_OK) {
                 DataInputStream = cc.getInputStream();
-                // 핸들러 시작
-//                int i;
-//                StringBuffer buffer = new StringBuffer();
-//                byte[] b = new byte[1024];
-//                while( (i = DataInputStream.read(b)) != -1) {
-//                    buffer.append(new String(b, 0, i));
-//                }
-//                str = buffer.toString();
-//                Handler mHandler = new Handler(Looper.getMainLooper());
-//                mHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        carInfoDialog(str);
-//                    }
-//                }, 0);
-////                if(mHandler !=null) {mHandler.removeMessages(0);}
-//                // TODO: 2019-09-30 핸들러 종료 아직 못함
-                // 핸들러 끝
-//                Log.e(TAG, "ByGetMethod, str = " + str);
+
             }
             else {
                 Log.e(LOG_TAG, "ByPostMethod, response = " + response);
@@ -958,8 +906,17 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
             Log.e(LOG_TAG, "onPostExecute, result: "+ result);
             // carInfoDialog(result);
             // 인식 결과를 EditView에 바로 갱신
-            mCarNumberEditView.setText("");
-            mCarNumberEditView.setText(result);
+
+
+            if (result.length() > 12) {
+                //py파일 except 위치 찾기가 힘들어서 결과값 길이로 대체
+                Toast.makeText(RecognizerAIActivity.this, "다시 촬영해 주세요", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(RecognizerAIActivity.this, "사진을 저장했습니다", Toast.LENGTH_SHORT).show();
+                mCarNumberEditView.setText("");
+                mCarNumberEditView.setText(result);
+            }
         }
     }
 
@@ -980,16 +937,6 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
         return imageFile;
     }
-    //안쓰고 저장
-//    private void galleryAddPic(){
-//        Log.i("galleryAddPic", "Call");
-//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-//        // 해당 경로에 있는 파일을 객체화(새로 파일을 만든다는 것으로 이해하면 안 됨)
-//        File f = new File(mCurrentPhotoPath);
-//        Uri contentUri = Uri.fromFile(f);
-//        mediaScanIntent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        sendBroadcast(mediaScanIntent);
-//        Toast.makeText(this, "잠시만 기다려주세요", Toast.LENGTH_SHORT).show();
-//    }
+
 
 }

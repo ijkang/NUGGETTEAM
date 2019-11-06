@@ -84,9 +84,18 @@ public class UploadFile extends AsyncTask<String, String, String> {
             //회전값 끝
             //회전값 적용 후 저장
             Bitmap bitmap = BitmapFactory.decodeFile(fileName);
+            int fWidth  = bitmap.getWidth();
+            int fHeight = bitmap.getHeight();
+//            int divH =(int)Math.round(fHeight*0.75); //센터기준 크롭
+            int divH = fHeight;
             Matrix matrix = new Matrix();
             matrix.postRotate(exifDegree);
-            Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            Log.e("result", String.valueOf(fWidth));
+            Log.e("result", String.valueOf(fWidth/4));
+
+            Bitmap bmp = Bitmap.createBitmap(bitmap, fWidth/3, 0, (fWidth-fWidth/3*2), fHeight, matrix, true); //원본 회전저장
+//            Bitmap bmp = bitmap.createBitmap(prebmp,0, 0, fWidth, divH); //크롭저장
+            //1/3만 크롭
             //learn content provider for more info
             FileOutputStream os = null;
             try {
@@ -131,7 +140,24 @@ public class UploadFile extends AsyncTask<String, String, String> {
 //                ;
 //            }
             // 덮어쓰기 끝 **리사이징 보류**
+            FileOutputStream fosObj = null;
 
+//            try {
+//                // 리사이징된 이미지 덮어쓰기(동일 파일명 사용)
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                options.inSampleSize = 4;
+//                Bitmap orgImage = BitmapFactory.decodeFile(fileName, options);
+//
+//
+//                Bitmap resizedBmp = Bitmap.createScaledBitmap(orgImage, (int)fWidth, (int)fHeight, true);
+//                fosObj = new FileOutputStream(fileName);
+//                resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
+//                fosObj.flush();
+//                fosObj.close();
+//            } catch (Exception e){
+//                ;
+//            }
+            //상이 흐려서 리사이징 막음
             try {
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
                 URL url = new URL(strings[0]);
@@ -239,4 +265,30 @@ public class UploadFile extends AsyncTask<String, String, String> {
         return 0;
     }
     //회전메소드 끝
+    public static Bitmap cropCenterBitmap(Bitmap src, int w, int h) {
+        if(src == null)
+            return null;
+
+        int width = src.getWidth();
+        int height = src.getHeight();
+
+//        if(width < w && height < h)
+//            return src;
+
+        int x = 0;
+        int y = 0;
+
+//        if(width > w)
+//            x = (width -w);
+//
+//        if(height > h)
+//            y = (height - h);
+
+        int cw = w/3; // crop width
+        int ch = h; // crop height
+
+
+        return Bitmap.createBitmap(src, x, y, width, ch);
+    }
+
 }
