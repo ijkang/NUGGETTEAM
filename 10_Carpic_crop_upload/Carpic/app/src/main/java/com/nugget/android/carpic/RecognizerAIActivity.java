@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
-import android.graphics.Rect;
 import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -495,8 +494,8 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
                 save(bytes); //파일저장
                 uploadFile(mCurrentPhotoPath); //업로드
 
-//                new MakeNetworkCall().execute("http://3.16.54.45:80/carnumrec/http.php?post=1", "Post"); //Main.py
-                new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?post=1", "Post"); //car_non.py
+                new MakeNetworkCall().execute("http://3.16.54.45:80/carnumrec/http.php?post=1", "Post"); //Main.py
+//                new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?post=1", "Post"); //car_non.py
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -571,18 +570,20 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
             captureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, mDeviceRotation);
 
-            Rect surRect = new Rect();
-//            surRect.bottom = mCameraSurface.getBottom();
-//            surRect.left = mCameraSurface.getLeft();
-//            surRect.top = mCameraSurface.getTop();
-//            surRect.right = mCameraSurface.getRight();
-            surRect.bottom = 3024;
-            surRect.left = 0;
-            surRect.top = 0;
-            surRect.right = 3024; // SCALER_CROP_REGION 줌만 가능한건지 이해 필요, 미리보기 서피스뷰가 1:1에 가까워서 설정
-            Log.e("RectSize for capture", ("Bottom"+mCameraSurface.getBottom()+"Right"+mCameraSurface.getRight()));
-            //크롭
-            captureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, surRect);
+            //scaleCrop uploadFile.java의 Bitmap crop 기능으로 대체
+//            Rect surRect = new Rect();
+////            surRect.bottom = mCameraSurface.getBottom();
+////            surRect.left = mCameraSurface.getLeft();
+////            surRect.top = mCameraSurface.getTop();
+////            surRect.right = mCameraSurface.getRight();
+//            surRect.bottom = 3024;
+//            surRect.left = 0;
+//            surRect.top = 0;
+//            surRect.right = 3024; // SCALER_CROP_REGION 줌만 가능한건지 이해 필요, 미리보기 서피스뷰가 1:1에 가까워서 설정
+//            Log.e("RectSize for capture", ("Bottom"+mCameraSurface.getBottom()+"Right"+mCameraSurface.getRight()));
+//            //크롭
+//            captureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, surRect);
+            //scaleCrop End
             CaptureRequest mCaptureRequest = captureRequestBuilder.build();
             mSession.capture(mCaptureRequest, mSessionCaptureCallback, mHandler);
 //
@@ -895,6 +896,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
             if (is != null) {
                 res = ConvertStreamToString(is);
             } else {
+                Toast.makeText(RecognizerAIActivity.this, "연결상태를 확인해 주세요", Toast.LENGTH_SHORT).show();
                 res = "Something went wrong";
             }
             return res;

@@ -93,8 +93,9 @@ public class UploadFile extends AsyncTask<String, String, String> {
             Log.e("result", String.valueOf(fWidth));
             Log.e("result", String.valueOf(fWidth/4));
 
-            Bitmap bmp = Bitmap.createBitmap(bitmap, fWidth/3, 0, (fWidth-fWidth/3*2), fHeight, matrix, true); //원본 회전저장
-//            Bitmap bmp = bitmap.createBitmap(prebmp,0, 0, fWidth, divH); //크롭저장
+            Bitmap bmp = Bitmap.createBitmap(bitmap, fWidth/4, 0, ((fWidth-fWidth/4*3)-fWidth/36), fHeight, matrix, true); //원본 회전저장+크롭저장
+            //createBitmap(source, startHeight, startWidth, HeightSize, WidthSize, rotate, matrix boolean
+
             //1/3만 크롭
             //learn content provider for more info
             FileOutputStream os = null;
