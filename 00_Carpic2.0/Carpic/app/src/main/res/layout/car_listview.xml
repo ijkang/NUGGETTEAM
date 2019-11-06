@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewcardate"
+            android:layout_width="80dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="cardate"
+            android:textColor="@color/colorBG"/>
+
+        <TextView
+            android:id="@+id/textViewcarnum"
+            android:layout_width="80dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="carnum"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/textViewcarowner"
+            android:layout_width="60dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="owner"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/textViewcarmemo"
+            android:layout_width="60dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="memo"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <ImageView
+            android:id="@+id/buttonEditCar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/edit"
+            android:tint="@color/colorBG"
+            android:text="Edit" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <ImageView
+            android:id="@+id/buttonDeleteCar"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:tint="@color/colorBG"
+            android:src="@drawable/del"
+            android:text="Delete" />
+
+    </LinearLayout>
+
+</LinearLayout>
