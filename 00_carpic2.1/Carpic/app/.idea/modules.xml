@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Carpic.iml" filepath="$PROJECT_DIR$/../Carpic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app.iml" filepath="$PROJECT_DIR$/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../opencv/opencv.iml" filepath="$PROJECT_DIR$/../opencv/opencv.iml" />
+    </modules>
+  </component>
+</project>
