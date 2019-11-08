@@ -6,11 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.ImageFormat;
-import android.graphics.Matrix;
 import android.hardware.Camera;
-import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -26,7 +23,6 @@ import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.ExifInterface;
 import android.media.Image;
 import android.media.ImageReader;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -81,8 +77,8 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     private Handler mHandler;
     private ImageReader mImageReader;
     private int mDeviceRotation;
-    private Sensor mMagnetometer;
-    private Sensor mAccelerometer;
+//    private Sensor mMagnetometer;
+//    private Sensor mAccelerometer;
     private SensorManager mSensorManager;
     private DeviceOrientation deviceOrientation;
     int mDSI_height, mDSI_width;
@@ -90,7 +86,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     private Button mEditButton = null;
 
     String mCurrentPhotoPath;
-    Uri imageUri;
+    private static final String TAG = "AI_OCR >";
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
@@ -102,7 +98,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e(LOG_TAG, "onCreate started in RecognizerAIActivity");
+        Log.e(TAG, "onCreate started in RecognizerAIActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognizer_ai);
 
@@ -132,7 +128,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
     @Override
     protected void onResume() {
-        Log.e(LOG_TAG, "onResume started in RecognizerAIActivity");
+        Log.e(TAG, "onResume started in RecognizerAIActivity");
         super.onResume();
 
         // do not use
@@ -142,7 +138,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
     @Override
     protected void onPause() {
-        Log.e(LOG_TAG, "onPause started in RecognizerAIActivity");
+        Log.e(TAG, "onPause started in RecognizerAIActivity");
         super.onPause();
 
         // do not use
@@ -162,12 +158,12 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         mCameraSurfaceHolder = mCameraSurface.getHolder();
         mCameraSurfaceHolder.addCallback(this);
 
+        //camera status+surfaceView open. do not use
 //        DisplayMetrics displayMetrics = new DisplayMetrics();
 //        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 //        mDSI_height = displayMetrics.heightPixels;
 //        mDSI_width = displayMetrics.widthPixels;
-//
-//
+////
 //        mCameraSurfaceHolder = mCameraSurface.getHolder();
 //        mCameraSurfaceHolder.addCallback(new SurfaceHolder.Callback() {
 
@@ -195,7 +191,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     static final int PERMISSIONS_REQUEST_CODE = 1000;
     String[] PERMISSIONS  = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private boolean hasPermissions(String[] permissions) {
-        Log.e(LOG_TAG, "hasPermissions started in RecognizerAIActivity");
+        Log.e(TAG, "hasPermissions started in RecognizerAIActivity");
         int result;
 
         // check permissions
@@ -212,14 +208,14 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     }
 
     private void checkVersion() {
-        Log.e(LOG_TAG, "checkVersion started in RecognizerAIActivity");
+        Log.e(TAG, "checkVersion started in RecognizerAIActivity");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!hasPermissions(PERMISSIONS)) {
-                Log.e(LOG_TAG, "request permission in checkVersion, RecognizerAIActivity");
+                Log.e(TAG, "request permission in checkVersion, RecognizerAIActivity");
                 // request permission if not yet
                 requestPermissions(PERMISSIONS, PERMISSIONS_REQUEST_CODE);
             } else {
-                Log.e(LOG_TAG, "request permission in checkVersion, RecognizerAIActivity");
+                Log.e(TAG, "request permission in checkVersion, RecognizerAIActivity");
                 // do nothing
 //                Intent mainIntent = new Intent(RecognizerAIActivity.this, MainActivity.class);
 //                startActivity(mainIntent);
@@ -230,7 +226,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.e(LOG_TAG, "onRequestPermissionsResult started in RecognizerAIActivity");
+        Log.e(TAG, "onRequestPermissionsResult started in RecognizerAIActivity");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         switch(requestCode){
@@ -257,7 +253,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
     @TargetApi(Build.VERSION_CODES.M)
     private void showDialogForPermission(String msg) {
-        Log.e(LOG_TAG, "showDialogForPermission started in RecognizerAIActivity");
+        Log.e(TAG, "showDialogForPermission started in RecognizerAIActivity");
         AlertDialog.Builder builder = new AlertDialog.Builder( RecognizerAIActivity.this);
         builder.setTitle("알림");
         builder.setMessage(msg);
@@ -276,7 +272,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     }
 
     private void prepareScreen() {
-        Log.e(LOG_TAG, "prepareScreen started in RecognizerAIActivity");
+        Log.e(TAG, "prepareScreen started in RecognizerAIActivity");
         // hide status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -285,10 +281,10 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     }
 
     private void initCamera() {
-        Log.e(LOG_TAG, "initCamera started in RecognizerAIActivity");
+        Log.e(TAG, "initCamera started in RecognizerAIActivity");
         mCamera = Camera.open();
         if (mCamera == null) {
-            Log.e(LOG_TAG, "mCamera is null, in initCamera, RecognizerAIActivity");
+            Log.e(TAG, "mCamera is null, in initCamera, RecognizerAIActivity");
             return;
         }
         mCamera.setDisplayOrientation(90);
@@ -305,7 +301,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.e(LOG_TAG, "surfaceCreated started in RecognizerAIActivity");
+        Log.e(TAG, "surfaceCreated started in RecognizerAIActivity");
         initCameraAndPreview();
 //        try {
 //            if (mCamera == null) {
@@ -313,26 +309,26 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 //                mCamera.startPreview();
 //            }
 //        } catch (IOException e) {
-//            Log.e(LOG_TAG, "Exception in surfaceCreated, RecognizerAIActivity, e = " + e);
+//            Log.e(TAG, "Exception in surfaceCreated, RecognizerAIActivity, e = " + e);
 //        }
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        Log.e(LOG_TAG, "surfaceChanged started in RecognizerAIActivity");
+        Log.e(TAG, "surfaceChanged started in RecognizerAIActivity");
         if (mCameraSurfaceHolder.getSurface() == null) {
-            Log.e(LOG_TAG, "mCameraSurfaceHolder.getSurface() is null in surfaceChanged, RecognizerAIActivity");
+            Log.e(TAG, "mCameraSurfaceHolder.getSurface() is null in surfaceChanged, RecognizerAIActivity");
             return;
         }
 
         try {
             mCamera.stopPreview();
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Exception in surfaceChanged, RecognizerAIActivity, e = " + e);
+            Log.e(TAG, "Exception in surfaceChanged, RecognizerAIActivity, e = " + e);
         }
 
         if (mCamera == null) {
-            Log.e(LOG_TAG, "mCamera is null in surfaceChanged, RecognizerAIActivity");
+            Log.e(TAG, "mCamera is null in surfaceChanged, RecognizerAIActivity");
             return;
         }
         // can't get parameters
@@ -345,7 +341,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 //            mCamera.setParameters(parameters);
 //        }
 //        else {
-//            Log.e(LOG_TAG, "parameters is null in surfaceChanged, RecognizerAIActivity");
+//            Log.e(TAG, "parameters is null in surfaceChanged, RecognizerAIActivity");
 //        }
 
         // View 를 재생성한다.
@@ -358,20 +354,20 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.e(LOG_TAG, "surfaceDestroyed started in RecognizerAIActivity");
+        Log.e(TAG, "surfaceDestroyed started in RecognizerAIActivity");
         if (mCamera != null) {
             mCamera.stopPreview();
             mCamera.release();
             mCamera = null;
         }
         else {
-            Log.e(LOG_TAG, "mCamera is null in surfaceDestroyed, RecognizerAIActivity");
+            Log.e(TAG, "mCamera is null in surfaceDestroyed, RecognizerAIActivity");
         }
     }
 
     //촬영 버튼 클릭
     public void onClickCameraTakeBtn(View view) {
-        Log.e(LOG_TAG, "onClickCameraTakeBtn started in RecognizerAIActivity");
+        Log.e(TAG, "onClickCameraTakeBtn started in RecognizerAIActivity");
         mCarNumberEditView.setText("");
         takePicture();
     }
@@ -385,25 +381,8 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         //registerIntent.putExtra("차번호", carNumber);
 
         RecognizerAIActivity.this.startActivity(registerIntent);
-        Log.d(LOG_TAG,"onClickCameraFinishBtn started in RecognizerAIActivity");
+        Log.d(TAG,"onClickCameraFinishBtn started in RecognizerAIActivity");
     }
-
-
-
-//    //완료 버튼 클릭
-//    public void onClickCameraFinishBtn(View view) {
-//        Log.e(LOG_TAG, "onClickCameraFinishBtn started in RecognizerAIActivity");
-//
-//        Log.e(LOG_TAG, "MakeNetworkCall.execute in MainActivity");
-//        //new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?post=1", "Post");
-//        new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?get=1", "Get");
-//    }
-//
-//    //재촬영 버튼 클릭
-//    public void onClickCameraReTakeBtn(View view) {
-//        Log.e(LOG_TAG, "onClickCameraReTakeBtn started in RecognizerAIActivity");
-//    }
-
 
     public void takePreview() throws CameraAccessException {
         mPreviewBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW); // 카메라 열기
@@ -452,7 +431,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     //여긴 촬영 대기하는 미리보기 화면
     @TargetApi(19)
     public void initCameraAndPreview() {
-        Log.e(LOG_TAG, "initCameraAndPreview started in RecognizerAIActivity");
+        Log.e(TAG, "initCameraAndPreview started in RecognizerAIActivity");
         HandlerThread handlerThread = new HandlerThread("CAMERA2");
         handlerThread.start();
         mHandler = new Handler(handlerThread.getLooper());
@@ -479,7 +458,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
             Toast.makeText(this, "카메라를 열지 못했습니다.", Toast.LENGTH_SHORT).show();
         }
     }
-
+    //캡쳐된 데이터를 파일로 밀어넣는 부분
     private ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
         @Override
         public void onImageAvailable(ImageReader reader) {
@@ -502,7 +481,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
                 e.printStackTrace();
             }
 
-            //insertImage를 쓰지않고 바로 저장으로 대체
+            //contentresolver를 사용, 사진정보를 입력하는 SaveImageTask > insertImage를 쓰지않고 바로 저장으로 대체
 //            Image image = reader.acquireNextImage();
 //            ByteBuffer buffer = image.getPlanes()[0].getBuffer();
 //            byte[] bytes = new byte[buffer.remaining()];
@@ -526,7 +505,6 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
                 if(output!=null) output.close();
             }
         }
-
 
     };
 
@@ -554,9 +532,9 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
             Toast.makeText(RecognizerAIActivity.this, "카메라를 열지 못했습니다.", Toast.LENGTH_SHORT).show();
         }
     };
-
+    //캡처데이터를 얻는부분
     public void takePicture() {
-        Log.e(LOG_TAG, "takePicture started in RecognizerAIActivity");
+        Log.e(TAG, "takePicture started in RecognizerAIActivity");
         try {
             CaptureRequest.Builder captureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             captureRequestBuilder.addTarget(mImageReader.getSurface());
@@ -570,20 +548,6 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 
             captureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, mDeviceRotation);
 
-            //scaleCrop uploadFile.java의 Bitmap crop 기능으로 대체
-//            Rect surRect = new Rect();
-////            surRect.bottom = mCameraSurface.getBottom();
-////            surRect.left = mCameraSurface.getLeft();
-////            surRect.top = mCameraSurface.getTop();
-////            surRect.right = mCameraSurface.getRight();
-//            surRect.bottom = 3024;
-//            surRect.left = 0;
-//            surRect.top = 0;
-//            surRect.right = 3024; // SCALER_CROP_REGION 줌만 가능한건지 이해 필요, 미리보기 서피스뷰가 1:1에 가까워서 설정
-//            Log.e("RectSize for capture", ("Bottom"+mCameraSurface.getBottom()+"Right"+mCameraSurface.getRight()));
-//            //크롭
-//            captureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, surRect);
-            //scaleCrop End
             CaptureRequest mCaptureRequest = captureRequestBuilder.build();
             mSession.capture(mCaptureRequest, mSessionCaptureCallback, mHandler);
 //
@@ -592,19 +556,8 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
         }
     }
 
-    public Bitmap getRotatedBitmap(Bitmap bitmap, int degrees) throws Exception {
-        Log.e(LOG_TAG, "getRotatedBitmap started in RecognizerAIActivity");
-        if(bitmap == null) return null;
-        if (degrees == 0) return bitmap;
-
-        Matrix m = new Matrix();
-        m.setRotate(degrees, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
-
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true);
-    }
-
     private void unlockFocus() {
-//        Log.e(LOG_TAG, "unlockFocus started in RecognizerAIActivity");
+//        Log.e(TAG, "unlockFocus started in RecognizerAIActivity");
         try {
             // Reset the auto-focus trigger
             mPreviewBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
@@ -616,16 +569,202 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
             e.printStackTrace();
         }
     }
-        ////미 사 용
-//    private String dateName(long dateTaken){
-//        Date date = new Date(dateTaken);
-//        SimpleDateFormat dateFormat =
-//        new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
-//        return dateFormat.format(date);
+
+
+    private void setAspectRatioTextureView(int ResolutionWidth , int ResolutionHeight) {
+        Log.e(TAG, "setAspectRatioTextureView started in RecognizerAIActivity");
+        if(ResolutionWidth > ResolutionHeight){
+            int newWidth = mDSI_width;
+            int newHeight = ((mDSI_width * ResolutionWidth)/ResolutionHeight);
+            updateTextureViewSize(newWidth,newHeight);
+
+        }else {
+            int newWidth = mDSI_width;
+            int newHeight = ((mDSI_width * ResolutionHeight)/ResolutionWidth);
+            updateTextureViewSize(newWidth,newHeight);
+        }
+    }
+
+    private void updateTextureViewSize(int viewWidth, int viewHeight) {
+        Log.e(TAG, "updateTextureViewSize started in RecognizerAIActivity");
+        mCameraSurface.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight));
+    }
+
+    public void uploadFile(String filePath){
+        String url = "http://3.16.54.45/imgupload.php";
+        try {
+            UploadFile uploadFile = new UploadFile(this);
+            uploadFile.setPath(filePath);
+            uploadFile.execute(url);
+        } catch (Exception e){
+            Log.e("UploadFile", String.valueOf(e));
+        }
+    }
+
+    // 2019.09.17 add =>
+    //[2. 네트워크 연결] 상세
+
+    //2-2 post입력
+    InputStream ByPostMethod(String ServerURL) {
+        Log.e(TAG, "ByPostMethod started in RecognizerAIActivity");
+        InputStream DataInputStream = null;
+        try {
+//            String PostParam = "first_name=soyeon&last_name=son";
+            String PostPath[] = mCurrentPhotoPath.split("/");
+            Log.i(TAG, "mCurrentPhotoPath"+mCurrentPhotoPath);
+            Log.i(TAG, "mCurrentPhotoPath"+PostPath[6]);
+            String PostParam = "path="+PostPath[6];
+            URL url = new URL(ServerURL);
+
+            HttpURLConnection cc = (HttpURLConnection)url.openConnection();
+            if(cc == null) {
+                Log.e(TAG, "ByPostMethod, cc is null");
+            }
+            cc.setReadTimeout(5000);
+            cc.setConnectTimeout(5000);
+            cc.setRequestMethod("POST");
+            cc.setDoInput(true);
+            cc.connect();
+
+            DataOutputStream dos = new DataOutputStream(cc.getOutputStream());
+            dos.writeBytes(PostParam);
+            dos.flush();
+            dos.close();
+
+            int response = cc.getResponseCode();
+
+            if (response == HttpURLConnection.HTTP_OK) {
+                DataInputStream = cc.getInputStream();
+
+            }
+            else {
+                Log.e(TAG, "ByPostMethod, response = " + response);
+            }
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error in PostData, error = " + e);
+        }
+
+        Log.e(TAG, "ByPostMethod ended in HttpExampleActivity");
+
+        return DataInputStream;
+    }
+
+    //2-3 string변환
+    String ConvertStreamToString(InputStream stream) {
+        InputStreamReader isr = new InputStreamReader(stream);
+        BufferedReader reader = new BufferedReader(isr);
+        StringBuilder response = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Error in ConvertStreamToString, error = " + e);
+        } catch (Exception e) {
+            Log.e(TAG, "Error in ConvertStreamToString", e);
+        } finally {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                Log.e(TAG, "Error in ConvertStreamToString", e);
+            } catch (Exception e) {
+                Log.e(TAG, "Error in ConvertStreamToString", e);
+            }
+        }
+
+        return response.toString();
+    }
+
+    private class MakeNetworkCall extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // do nothing
+        }
+
+        @Override
+        protected String doInBackground(String... arg) {
+            InputStream is = null;
+            String URL = arg[0];
+            Log.e(TAG, "doInBackground started in MainActivity, URL: " + URL);
+            String res = "";
+
+            Log.e(TAG, "doInBackground, arg[1] = " + arg[1]);
+            if (arg[1].equals("Post")) {
+                is = ByPostMethod(URL);
+            } else if (arg[1].equals("Get")) {
+//                is = ByGetMethod(URL);
+            } else {
+                Log.e(TAG, "doInBackground, do nothing, arg[1] = " + arg[1]);
+            }
+
+            if (is != null) {
+                res = ConvertStreamToString(is);
+            } else {
+                Toast.makeText(RecognizerAIActivity.this, "연결상태를 확인해 주세요", Toast.LENGTH_SHORT).show();
+                res = "Something went wrong";
+            }
+            return res;
+        }
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            Log.e(TAG, "onPostExecute, result: "+ result);
+            // carInfoDialog(result);
+            // 인식 결과를 EditView에 바로 갱신
+
+
+            if (result.length() > 12) {
+                //인식.py파일 exception 발생범위가 커서 결과값 길이로 대체
+                Toast.makeText(RecognizerAIActivity.this, "다시 촬영해 주세요", Toast.LENGTH_SHORT).show();
+                Log.e("RecogResultFalse", result);
+            }
+            else {
+                Toast.makeText(RecognizerAIActivity.this, "사진을 저장했습니다", Toast.LENGTH_SHORT).show();
+                Log.e("RecogResultTrue", result);
+                mCarNumberEditView.setText("");
+                mCarNumberEditView.setText(result);
+            }
+        }
+    }
+
+    public File createImageFile() throws IOException {
+        // 이미지 파일명 생성
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "CARPIC_" + timeStamp + ".jpg";
+        File imageFile = null;
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures", "CARPIC");
+
+        if (!storageDir.exists()) {
+            Log.i("mCurrentPhotoPath1", storageDir.toString());
+            storageDir.mkdirs();
+        }
+
+        imageFile = new File(storageDir, imageFileName);
+        mCurrentPhotoPath = imageFile.getAbsolutePath();
+
+        return imageFile;
+    }
+//    ===================미사용===========================
+// 회전저장
+//    public Bitmap getRotatedBitmap(Bitmap bitmap, int degrees) throws Exception {
+//        Log.e(TAG, "getRotatedBitmap started in RecognizerAIActivity");
+//        if(bitmap == null) return null;
+//        if (degrees == 0) return bitmap;
+//
+//        Matrix m = new Matrix();
+//        m.setRotate(degrees, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
+//
+//        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true);
 //    }
 
-//    public final String insertImage(ContentResolver cr, Bitmap source, String title, String description) {
-//        Log.e(LOG_TAG, "insertImage started in RecognizerAIActivity");
+    // 파일저장 메소드
+//           public final String insertImage(ContentResolver cr, Bitmap source, String title, String description) {
+//        Log.e(TAG, "insertImage started in RecognizerAIActivity");
 //        // 이미지 파일명 생성
 ////        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 ////        String imageFileName = "CARPIC_" + timeStamp + ".jpg";
@@ -649,7 +788,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 //        // Add the date meta data to ensure the image is added at the front of the gallery
 //        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis());
 //        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-//        //Log.e(LOG_TAG, "System.currentTimeMillis() in insertImage, RecognizerAIActivity, System.currentTimeMillis() = " + System.currentTimeMillis());
+//        //Log.e(TAG, "System.currentTimeMillis() in insertImage, RecognizerAIActivity, System.currentTimeMillis() = " + System.currentTimeMillis());
 //
 //        Uri url = null;
 //        String stringUrl = null;    /* value to be returned */
@@ -657,13 +796,13 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 //
 //        try {
 //            url = cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//            Log.e(LOG_TAG, "url in insertImage, RecognizerAIActivity, uri = " + url);
+//            Log.e(TAG, "url in insertImage, RecognizerAIActivity, uri = " + url);
 //
 //            if (source != null) {
 //
 //                OutputStream imageOut  = cr.openOutputStream(url);
 //
-//                Log.e(LOG_TAG, "in insertImage, RecognizerAIActivity, stringUrl = " + url);
+//                Log.e(TAG, "in insertImage, RecognizerAIActivity, stringUrl = " + url);
 //                try {
 //                    source.compress(Bitmap.CompressFormat.JPEG, 50, imageOut);
 //                } finally {
@@ -682,7 +821,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 //
 //        if (url != null) {
 //            stringUrl = url.toString();
-//            Log.e(LOG_TAG, "in insertImage, RecognizerAIActivity, stringUrl = " + stringUrl);
+//            Log.e(TAG, "in insertImage, RecognizerAIActivity, stringUrl = " + stringUrl);
 //        }
 //
 //        return stringUrl;
@@ -709,45 +848,13 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 //            return null;
 //        }
 //    }
-    //// 미 사 용
 
-    private void setAspectRatioTextureView(int ResolutionWidth , int ResolutionHeight) {
-        Log.e(LOG_TAG, "setAspectRatioTextureView started in RecognizerAIActivity");
-        if(ResolutionWidth > ResolutionHeight){
-            int newWidth = mDSI_width;
-            int newHeight = ((mDSI_width * ResolutionWidth)/ResolutionHeight);
-            updateTextureViewSize(newWidth,newHeight);
 
-        }else {
-            int newWidth = mDSI_width;
-            int newHeight = ((mDSI_width * ResolutionHeight)/ResolutionWidth);
-            updateTextureViewSize(newWidth,newHeight);
-        }
-    }
-
-    private void updateTextureViewSize(int viewWidth, int viewHeight) {
-        Log.e(LOG_TAG, "updateTextureViewSize started in RecognizerAIActivity");
-        mCameraSurface.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight));
-    }
-
-    public void uploadFile(String filePath){
-        String url = "http://3.16.54.45/imgupload.php";
-        try {
-            UploadFile uploadFile = new UploadFile(this);
-            uploadFile.setPath(filePath);
-            uploadFile.execute(url);
-        } catch (Exception e){
-            Log.e("UploadFile", String.valueOf(e));
-        }
-    }
-
-    // 2019.09.17 add =>
-    //[2. 네트워크 연결] 상세
     //2-1 GET입력
-    String str = null;
-
+//    String str = null;
+    //Get
 //    InputStream ByGetMethod(String ServerURL) {
-//        Log.e(LOG_TAG, "ByGetMethod started in RecognizerAIActivity");
+//        Log.e(TAG, "ByGetMethod started in RecognizerAIActivity");
 //
 //        InputStream DataInputStream = null;
 //        try { //서버연결
@@ -760,10 +867,10 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 //            cc.connect();
 //
 //            int response = cc.getResponseCode();
-//            Log.e(LOG_TAG, "ByGetMethod started in RecognizerAIActivity, response = " + response);
+//            Log.e(TAG, "ByGetMethod started in RecognizerAIActivity, response = " + response);
 //            if (response == HttpURLConnection.HTTP_OK) {
 //                DataInputStream = cc.getInputStream();
-//                Log.e(LOG_TAG, "ByGetMethod, DataInputStream = " + DataInputStream);
+//                Log.e(TAG, "ByGetMethod, DataInputStream = " + DataInputStream);
 //
 //                int i;
 //                StringBuffer buffer = new StringBuffer();
@@ -772,7 +879,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 //                    buffer.append(new String(b, 0, i));
 //                }
 //                str = buffer.toString();
-//                Log.e(LOG_TAG, "ByGetMethod, str = " + str);
+//                Log.e(TAG, "ByGetMethod, str = " + str);
 //                Handler mHandler = new Handler(Looper.getMainLooper());
 //                mHandler.postDelayed(new Runnable() {
 //                    @Override
@@ -784,161 +891,14 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
 //                if(mHandler !=null) {mHandler.removeMessages(0);}
 //            }
 //            else {
-//                Log.e(LOG_TAG, "ByGetMethod, response = " + response);
+//                Log.e(TAG, "ByGetMethod, response = " + response);
 //            }
 //        } catch (Exception e) {
-//            Log.e(LOG_TAG, "Error in ByGetMethod, e = " + e);
+//            Log.e(TAG, "Error in ByGetMethod, e = " + e);
 //        }
 //
-//        Log.e(LOG_TAG, "ByGetMethod ended in RecognizerAIActivity");
+//        Log.e(TAG, "ByGetMethod ended in RecognizerAIActivity");
 //
 //        return DataInputStream;
 //    }
-
-    //2-2 post입력
-    InputStream ByPostMethod(String ServerURL) {
-        Log.e(LOG_TAG, "ByPostMethod started in RecognizerAIActivity");
-        InputStream DataInputStream = null;
-        try {
-            //String PostParam = "first_name=dong&last_name=gam";
-//            String PostParam = "first_name=soyeon&last_name=son";
-            String PostPath[] = mCurrentPhotoPath.split("/");
-            Log.i(LOG_TAG, "mCurrentPhotoPath"+mCurrentPhotoPath);
-            Log.i(LOG_TAG, "mCurrentPhotoPath"+PostPath[6]);
-            String PostParam = "path="+PostPath[6];
-            URL url = new URL(ServerURL);
-
-            HttpURLConnection cc = (HttpURLConnection)url.openConnection();
-            if(cc == null) {
-                Log.e(LOG_TAG, "ByPostMethod, cc is null");
-            }
-            cc.setReadTimeout(5000);
-            cc.setConnectTimeout(5000);
-            cc.setRequestMethod("POST");
-            cc.setDoInput(true);
-            cc.connect();
-
-            DataOutputStream dos = new DataOutputStream(cc.getOutputStream());
-            dos.writeBytes(PostParam);
-            dos.flush();
-            dos.close();
-
-            int response = cc.getResponseCode();
-
-            if (response == HttpURLConnection.HTTP_OK) {
-                DataInputStream = cc.getInputStream();
-
-            }
-            else {
-                Log.e(LOG_TAG, "ByPostMethod, response = " + response);
-            }
-
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "Error in PostData, error = " + e);
-        }
-
-        Log.e(LOG_TAG, "ByPostMethod ended in HttpExampleActivity");
-
-        return DataInputStream;
-    }
-
-    //2-3 string변환
-    String ConvertStreamToString(InputStream stream) {
-        InputStreamReader isr = new InputStreamReader(stream);
-        BufferedReader reader = new BufferedReader(isr);
-        StringBuilder response = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error in ConvertStreamToString, error = " + e);
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "Error in ConvertStreamToString", e);
-        } finally {
-            try {
-                stream.close();
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Error in ConvertStreamToString", e);
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "Error in ConvertStreamToString", e);
-            }
-        }
-
-        return response.toString();
-    }
-
-    private class MakeNetworkCall extends AsyncTask<String, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // do nothing
-        }
-
-        @Override
-        protected String doInBackground(String... arg) {
-            InputStream is = null;
-            String URL = arg[0];
-            Log.e(LOG_TAG, "doInBackground started in MainActivity, URL: " + URL);
-            String res = "";
-
-            Log.e(LOG_TAG, "doInBackground, arg[1] = " + arg[1]);
-            if (arg[1].equals("Post")) {
-                is = ByPostMethod(URL);
-            } else if (arg[1].equals("Get")) {
-//                is = ByGetMethod(URL);
-            } else {
-                Log.e(LOG_TAG, "doInBackground, do nothing, arg[1] = " + arg[1]);
-            }
-
-            if (is != null) {
-                res = ConvertStreamToString(is);
-            } else {
-                Toast.makeText(RecognizerAIActivity.this, "연결상태를 확인해 주세요", Toast.LENGTH_SHORT).show();
-                res = "Something went wrong";
-            }
-            return res;
-        }
-
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            Log.e(LOG_TAG, "onPostExecute, result: "+ result);
-            // carInfoDialog(result);
-            // 인식 결과를 EditView에 바로 갱신
-
-
-            if (result.length() > 12) {
-                //py파일 except 위치 찾기가 힘들어서 결과값 길이로 대체
-                Toast.makeText(RecognizerAIActivity.this, "다시 촬영해 주세요", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(RecognizerAIActivity.this, "사진을 저장했습니다", Toast.LENGTH_SHORT).show();
-                mCarNumberEditView.setText("");
-                mCarNumberEditView.setText(result);
-            }
-        }
-    }
-
-    public File createImageFile() throws IOException {
-        // 이미지 파일명 생성
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "CARPIC_" + timeStamp + ".jpg";
-        File imageFile = null;
-        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures", "CARPIC");
-
-        if (!storageDir.exists()) {
-            Log.i("mCurrentPhotoPath1", storageDir.toString());
-            storageDir.mkdirs();
-        }
-
-        imageFile = new File(storageDir, imageFileName);
-        mCurrentPhotoPath = imageFile.getAbsolutePath();
-
-        return imageFile;
-    }
-
-
 }

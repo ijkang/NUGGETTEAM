@@ -59,7 +59,7 @@ public class UploadFile extends AsyncTask<String, String, String> {
         mProgressDialog.setMessage("Image uploading...");
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.setIndeterminate(false);
-        //mProgressDialog.show(); 로딩중 메시지 삭제(190927)
+        //mProgressDialog.show(); progressDialog 삭제(190927)
     }
 
     @Override
@@ -82,22 +82,18 @@ public class UploadFile extends AsyncTask<String, String, String> {
                     ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             int exifDegree = exifOrientationToDegrees(exifOrientation);
             //회전값 끝
-            //회전값 적용 후 저장
+            //회전값 적용 후 저장+크롭
             Bitmap bitmap = BitmapFactory.decodeFile(fileName);
-            int fWidth  = bitmap.getWidth();
+            int fWidth  = bitmap.getWidth(); //getwidth, getHeight는 float값임
             int fHeight = bitmap.getHeight();
-//            int divH =(int)Math.round(fHeight*0.75); //센터기준 크롭
-            int divH = fHeight;
+
             Matrix matrix = new Matrix();
             matrix.postRotate(exifDegree);
-            Log.e("result", String.valueOf(fWidth));
-            Log.e("result", String.valueOf(fWidth/4));
 
             Bitmap bmp = Bitmap.createBitmap(bitmap, fWidth/4, 0, ((fWidth-fWidth/4*3)-fWidth/36), fHeight, matrix, true); //원본 회전저장+크롭저장
             //createBitmap(source, startHeight, startWidth, HeightSize, WidthSize, rotate, matrix boolean
-
-            //1/3만 크롭
-            //learn content provider for more info
+            Log.e("result", String.valueOf(fWidth));
+            Log.e("result", String.valueOf(fWidth/36));
             FileOutputStream os = null;
             try {
                 os = new FileOutputStream(fileName);
@@ -107,58 +103,7 @@ public class UploadFile extends AsyncTask<String, String, String> {
 
             bmp.compress(Bitmap.CompressFormat.JPEG,100,os);
             //저장 끝
-            // 이미지 리사이징
-//            Bitmap srcBmp = BitmapFactory.decodeFile(fileName);
-//            int iWidth   = 520;         // 축소시킬 너비
-//            int iHeight  = 520;         // 축소시킬 높이
-//            float fWidth  = srcBmp.getWidth();
-//            float fHeight = srcBmp.getHeight();
-//
-//            // 원하는 넓이보다 클 경우의 설정
-//            if(fWidth > iWidth) {
-//                float mWidth = (float) (fWidth / 100);
-//                float fScale = (float) (iWidth / mWidth);
-//                fWidth *= (fScale / 100);
-//                fHeight *= (fScale / 100);
-//
-//            // 원하는 높이보다 클 경우의 설정
-//            }else if (fHeight > iHeight) {
-//                float mHeight = (float) (fHeight / 100);
-//                float fScale = (float) (iHeight / mHeight);
-//                fWidth *= (fScale / 100);
-//                fHeight *= (fScale / 100);
-//            }
-//            FileOutputStream fosObj = null;
-//
-//            try {
-//                // 리사이징된 이미지 덮어쓰기(동일 파일명 사용)
-//                Bitmap resizedBmp = Bitmap.createScaledBitmap(srcBmp, (int)fWidth, (int)fHeight, true);
-//                fosObj = new FileOutputStream(fileName);
-//                resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
-//                fosObj.flush();
-//                fosObj.close();
-//            } catch (Exception e){
-//                ;
-//            }
-            // 덮어쓰기 끝 **리사이징 보류**
-            FileOutputStream fosObj = null;
 
-//            try {
-//                // 리사이징된 이미지 덮어쓰기(동일 파일명 사용)
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inSampleSize = 4;
-//                Bitmap orgImage = BitmapFactory.decodeFile(fileName, options);
-//
-//
-//                Bitmap resizedBmp = Bitmap.createScaledBitmap(orgImage, (int)fWidth, (int)fHeight, true);
-//                fosObj = new FileOutputStream(fileName);
-//                resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
-//                fosObj.flush();
-//                fosObj.close();
-//            } catch (Exception e){
-//                ;
-//            }
-            //상이 흐려서 리사이징 막음
             try {
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
                 URL url = new URL(strings[0]);
@@ -189,7 +134,6 @@ public class UploadFile extends AsyncTask<String, String, String> {
                 dos.writeBytes(lineEnd);
                 dos.writeBytes("newImage"); // newImage라는 값을 넘김
                 dos.writeBytes(lineEnd);
-
 
                 // 이미지 전송, 데이터 전달
                 // uploadded_file라는 php key값에 저장되는 내용은 fileName
@@ -226,8 +170,6 @@ public class UploadFile extends AsyncTask<String, String, String> {
                 if (serverResponseCode == 200) {
 
                 }
-
-
                 // 결과 확인
                 BufferedReader rd = null;
 
@@ -244,7 +186,8 @@ public class UploadFile extends AsyncTask<String, String, String> {
             } catch (Exception e) {
                 Log.e(TAG + " Error", e.toString());
             }
-            mProgressDialog.dismiss();
+//            mProgressDialog.dismiss();
+            //progressDialog 사용안함
             return success;
         }
     }
@@ -265,31 +208,57 @@ public class UploadFile extends AsyncTask<String, String, String> {
         }
         return 0;
     }
-    //회전메소드 끝
-    public static Bitmap cropCenterBitmap(Bitmap src, int w, int h) {
-        if(src == null)
-            return null;
-
-        int width = src.getWidth();
-        int height = src.getHeight();
-
-//        if(width < w && height < h)
-//            return src;
-
-        int x = 0;
-        int y = 0;
-
-//        if(width > w)
-//            x = (width -w);
+//==========================미사용==================================
+    // 이미지 리사이징
+//            Bitmap srcBmp = BitmapFactory.decodeFile(fileName);
+//            int iWidth   = 520;         // 축소시킬 너비
+//            int iHeight  = 520;         // 축소시킬 높이
+//            float fWidth  = srcBmp.getWidth();
+//            float fHeight = srcBmp.getHeight();
 //
-//        if(height > h)
-//            y = (height - h);
+//            // 원하는 넓이보다 클 경우의 설정
+//            if(fWidth > iWidth) {
+//                float mWidth = (float) (fWidth / 100);
+//                float fScale = (float) (iWidth / mWidth);
+//                fWidth *= (fScale / 100);
+//                fHeight *= (fScale / 100);
+//
+//            // 원하는 높이보다 클 경우의 설정
+//            }else if (fHeight > iHeight) {
+//                float mHeight = (float) (fHeight / 100);
+//                float fScale = (float) (iHeight / mHeight);
+//                fWidth *= (fScale / 100);
+//                fHeight *= (fScale / 100);
+//            }
+//            FileOutputStream fosObj = null;
+//
+//            try {
+//                // 리사이징된 이미지 덮어쓰기(동일 파일명 사용)
+//                Bitmap resizedBmp = Bitmap.createScaledBitmap(srcBmp, (int)fWidth, (int)fHeight, true);
+//                fosObj = new FileOutputStream(fileName);
+//                resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
+//                fosObj.flush();
+//                fosObj.close();
+//            } catch (Exception e){
+//                ;
+//            }
+    // 덮어쓰기 끝 **리사이징 보류**
+//            FileOutputStream fosObj = null;
 
-        int cw = w/3; // crop width
-        int ch = h; // crop height
-
-
-        return Bitmap.createBitmap(src, x, y, width, ch);
-    }
-
+//            try {
+//                // 리사이징된 이미지 덮어쓰기(동일 파일명 사용)
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                options.inSampleSize = 4;
+//                Bitmap orgImage = BitmapFactory.decodeFile(fileName, options);
+//
+//
+//                Bitmap resizedBmp = Bitmap.createScaledBitmap(orgImage, (int)fWidth, (int)fHeight, true);
+//                fosObj = new FileOutputStream(fileName);
+//                resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
+//                fosObj.flush();
+//                fosObj.close();
+//            } catch (Exception e){
+//                ;
+//            }
+    //상이 흐려서 리사이징 막음
 }
