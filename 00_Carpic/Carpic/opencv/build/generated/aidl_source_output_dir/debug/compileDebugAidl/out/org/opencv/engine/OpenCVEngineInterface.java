@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: C:\\Users\\J\\Desktop\\Carpic\\opencv\\java\\src\\org\\opencv\\engine\\OpenCVEngineInterface.aidl
+ * Original file: C:\\0 Quick Launcher\\gitlocal_online\\WJTEAM\\00_Carpic\\Carpic\\opencv\\java\\src\\org\\opencv\\engine\\OpenCVEngineInterface.aidl
  */
 package org.opencv.engine;
 /**
