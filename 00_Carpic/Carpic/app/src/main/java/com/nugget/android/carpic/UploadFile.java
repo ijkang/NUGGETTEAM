@@ -9,12 +9,6 @@ import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.CLAHE;
-import org.opencv.imgproc.Imgproc;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -29,8 +23,6 @@ import java.net.URL;
 /*[이미지전송부 Activity]*/
 public class UploadFile extends AsyncTask<String, String, String> {
 
-    private Mat originImg;
-   //    private CLAHE clahe;
     Context context;                // 생성자 호출 시
     ProgressDialog mProgressDialog; // 진행 상태 다이얼로그
     String fileName;                // 파일 위치
@@ -49,8 +41,6 @@ public class UploadFile extends AsyncTask<String, String, String> {
     int serverResponseCode;
     String TAG = "FileUpload";
 
-
-
     public UploadFile(Context context) {
         this.context = context;
     }
@@ -59,7 +49,6 @@ public class UploadFile extends AsyncTask<String, String, String> {
         this.fileName = uploadFilePath;
         this.sourceFile = new File(uploadFilePath);
     }
-
 
     @Override
     protected void onPreExecute() {
@@ -70,7 +59,7 @@ public class UploadFile extends AsyncTask<String, String, String> {
         mProgressDialog.setMessage("Image uploading...");
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.setIndeterminate(false);
-        //mProgressDialog.show(); 로딩중 메시지 삭제(190927)
+        //mProgressDialog.show(); progressDialog 삭제(190927)
     }
 
     @Override
@@ -81,8 +70,7 @@ public class UploadFile extends AsyncTask<String, String, String> {
         } else {
             String success = "Success";
             Log.i(TAG, "sourceFile(" + fileName + ") is A File");
-            //opencv 전처리 파이썬 코드와 충돌 문제로 grayscale만 사용
-//            openCvProc(fileName);
+
             //회전값 받기
             ExifInterface exif = null;
             try {
@@ -94,18 +82,18 @@ public class UploadFile extends AsyncTask<String, String, String> {
                     ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             int exifDegree = exifOrientationToDegrees(exifOrientation);
             //회전값 끝
-            //회전값 적용 후 저장
-            //이미지 크기 구하기
-//            String height;
-//            String width;
-//            height = exif.getAttribute(ExifInterface.TAG_IMAGE_LENGTH);
-//            width = exif.getAttribute(ExifInterface.TAG_IMAGE_WIDTH);
-
+            //회전값 적용 후 저장+크롭
             Bitmap bitmap = BitmapFactory.decodeFile(fileName);
+            int fWidth  = bitmap.getWidth(); //getwidth, getHeight는 float값임
+            int fHeight = bitmap.getHeight();
+
             Matrix matrix = new Matrix();
             matrix.postRotate(exifDegree);
-            Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-            //learn content provider for more info
+
+            Bitmap bmp = Bitmap.createBitmap(bitmap, fWidth/4, 0, ((fWidth-fWidth/4*3)-fWidth/36), fHeight, matrix, true); //원본 회전저장+크롭저장
+            //createBitmap(source, startHeight, startWidth, HeightSize, WidthSize, rotate, matrix boolean
+            Log.e("result", String.valueOf(fWidth));
+            Log.e("result", String.valueOf(fWidth/36));
             FileOutputStream os = null;
             try {
                 os = new FileOutputStream(fileName);
@@ -115,43 +103,6 @@ public class UploadFile extends AsyncTask<String, String, String> {
 
             bmp.compress(Bitmap.CompressFormat.JPEG,100,os);
             //저장 끝
-//             이미지 리사이징
-            Bitmap srcBmp = BitmapFactory.decodeFile(fileName);
-            int iWidth   = 756;         // 축소시킬 너비
-            int iHeight  = 1008;         // 축소시킬 높이
-            float fWidth  = srcBmp.getWidth();
-            float fHeight = srcBmp.getHeight();
-
-            // 원하는 넓이보다 클 경우의 설정
-            if(fWidth > iWidth) {
-                float mWidth = (float) (fWidth / 100);
-                float fScale = (float) (iWidth / mWidth);
-                fWidth *= (fScale / 100);
-                fHeight *= (fScale / 100);
-
-            // 원하는 높이보다 클 경우의 설정
-            }else if (fHeight > iHeight) {
-                float mHeight = (float) (fHeight / 100);
-                float fScale = (float) (iHeight / mHeight);
-                fWidth *= (fScale / 100);
-                fHeight *= (fScale / 100);
-            }
-            FileOutputStream fosObj = null;
-
-            try {
-                // 리사이징된 이미지 덮어쓰기(동일 파일명 사용)
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 4;
-                Bitmap orgImage = BitmapFactory.decodeFile(fileName, options);
-                Bitmap resizedBmp = Bitmap.createScaledBitmap(orgImage, (int)fWidth, (int)fHeight, true);
-                fosObj = new FileOutputStream(fileName);
-                resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
-                fosObj.flush();
-                fosObj.close();
-            } catch (Exception e){
-                ;
-            }
-            // 덮어쓰기 끝 **리사이징 보류**
 
             try {
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
@@ -183,7 +134,6 @@ public class UploadFile extends AsyncTask<String, String, String> {
                 dos.writeBytes(lineEnd);
                 dos.writeBytes("newImage"); // newImage라는 값을 넘김
                 dos.writeBytes(lineEnd);
-
 
                 // 이미지 전송, 데이터 전달
                 // uploadded_file라는 php key값에 저장되는 내용은 fileName
@@ -220,8 +170,6 @@ public class UploadFile extends AsyncTask<String, String, String> {
                 if (serverResponseCode == 200) {
 
                 }
-
-
                 // 결과 확인
                 BufferedReader rd = null;
 
@@ -238,7 +186,8 @@ public class UploadFile extends AsyncTask<String, String, String> {
             } catch (Exception e) {
                 Log.e(TAG + " Error", e.toString());
             }
-            mProgressDialog.dismiss();
+//            mProgressDialog.dismiss();
+            //progressDialog 사용안함
             return success;
         }
     }
@@ -259,35 +208,57 @@ public class UploadFile extends AsyncTask<String, String, String> {
         }
         return 0;
     }
-    //회전메소드 끝
-    //openCV gray/CLAHE/GaussianBlur/BINARY
-//    public void openCvProc(String x){
-//        Log.e(TAG, "Mat 조작 시작");
-////        Mat originImg = new Mat();
-////        //originImg에 원본+grayscale 대입
-//        originImg = Imgcodecs.imread(x,Imgcodecs.IMREAD_GRAYSCALE);
-////        CLAHE clahe = Imgproc.createCLAHE();
-////        Mat res = new Mat();
-////        Mat k = new Mat();
-////        clahe.apply(originImg,res);
-//////         contrast limit =2, tile size = 8X8 --hist 평탄화
-////        clahe.setTilesGridSize(new Size(8,8));
-////        clahe.setClipLimit(2.0);
-////        clahe.apply(originImg, originImg);
-//////        claheImg < originImg. 평탄화 끝.
-////        Size s = new Size(5,5);
-////        Imgproc.GaussianBlur(originImg, originImg, s,0, 0);
-//////        originImg < claheImg. 가우시안 블러 끝
-////        Imgproc.adaptiveThreshold(originImg, originImg,255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
-////                Imgproc.THRESH_BINARY_INV, 19, 9);
-//////        adaptiveThreshhold + binary 끝
-//////        mopology 시도
-////        Size kernel = new Size(3, 7);
-////        k = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, kernel);
-////        Imgproc.morphologyEx(originImg, originImg, Imgproc.MORPH_CLOSE, k);
-//        // 컨트롤 불가 보류
-//        Imgcodecs.imwrite(x, originImg );
+//==========================미사용==================================
+    // 이미지 리사이징
+//            Bitmap srcBmp = BitmapFactory.decodeFile(fileName);
+//            int iWidth   = 520;         // 축소시킬 너비
+//            int iHeight  = 520;         // 축소시킬 높이
+//            float fWidth  = srcBmp.getWidth();
+//            float fHeight = srcBmp.getHeight();
 //
-//    }
+//            // 원하는 넓이보다 클 경우의 설정
+//            if(fWidth > iWidth) {
+//                float mWidth = (float) (fWidth / 100);
+//                float fScale = (float) (iWidth / mWidth);
+//                fWidth *= (fScale / 100);
+//                fHeight *= (fScale / 100);
+//
+//            // 원하는 높이보다 클 경우의 설정
+//            }else if (fHeight > iHeight) {
+//                float mHeight = (float) (fHeight / 100);
+//                float fScale = (float) (iHeight / mHeight);
+//                fWidth *= (fScale / 100);
+//                fHeight *= (fScale / 100);
+//            }
+//            FileOutputStream fosObj = null;
+//
+//            try {
+//                // 리사이징된 이미지 덮어쓰기(동일 파일명 사용)
+//                Bitmap resizedBmp = Bitmap.createScaledBitmap(srcBmp, (int)fWidth, (int)fHeight, true);
+//                fosObj = new FileOutputStream(fileName);
+//                resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
+//                fosObj.flush();
+//                fosObj.close();
+//            } catch (Exception e){
+//                ;
+//            }
+    // 덮어쓰기 끝 **리사이징 보류**
+//            FileOutputStream fosObj = null;
 
+//            try {
+//                // 리사이징된 이미지 덮어쓰기(동일 파일명 사용)
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                options.inSampleSize = 4;
+//                Bitmap orgImage = BitmapFactory.decodeFile(fileName, options);
+//
+//
+//                Bitmap resizedBmp = Bitmap.createScaledBitmap(orgImage, (int)fWidth, (int)fHeight, true);
+//                fosObj = new FileOutputStream(fileName);
+//                resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
+//                fosObj.flush();
+//                fosObj.close();
+//            } catch (Exception e){
+//                ;
+//            }
+    //상이 흐려서 리사이징 막음
 }

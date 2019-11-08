@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Carpic</string>
-    <string name="ocr_result_tip"></string>
+    <string name="ocr_result_tip" />
 </resources>

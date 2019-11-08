@@ -112,16 +112,16 @@
         android:gravity="center_horizontal">
 
 
-<!--        &lt;!&ndash;취소버튼 구현하기&ndash;&gt;-->
-<!--        <Button-->
-<!--            android:id="@+id/viewdataLL"-->
-<!--            android:layout_margin="5dp"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:background="@drawable/btnstyle"-->
-<!--            android:textColor="#FFFFFF"-->
-<!--            android:text="취소"/>-->
+        <!--        &lt;!&ndash;취소버튼 구현하기&ndash;&gt;-->
+        <!--        <Button-->
+        <!--            android:id="@+id/viewdataLL"-->
+        <!--            android:layout_margin="5dp"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:background="@drawable/btnstyle"-->
+        <!--            android:textColor="#FFFFFF"-->
+        <!--            android:text="취소"/>-->
 
         <Button
             android:id="@+id/buttonUpdateCar"
@@ -134,13 +134,13 @@
             android:text="수정" />
     </LinearLayout>
 
-<!--    <Button-->
-<!--        android:id="@+id/buttonUpdateCar"-->
-<!--        android:layout_margin="40dp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@drawable/btnstyle"-->
-<!--        android:textColor="#FFFFFF"-->
-<!--        android:text="수정" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/buttonUpdateCar"-->
+    <!--        android:layout_margin="40dp"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/btnstyle"-->
+    <!--        android:textColor="#FFFFFF"-->
+    <!--        android:text="수정" />-->
 
 </LinearLayout>
