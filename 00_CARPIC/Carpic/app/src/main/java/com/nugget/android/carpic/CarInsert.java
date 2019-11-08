@@ -45,9 +45,9 @@ public class CarInsert extends AppCompatActivity {
         //현재시간 고정 끝
 
 //        //차량 번호 받아오기
-//        Intent intent = getIntent();
-//        String carnumber = intent.getExtras().getString("차번호");
-//        e_carnum.setText(carnumber);
+        Intent intent = getIntent();
+        String carnumber = intent.getExtras().getString("차번호");
+        e_carnum.setText(carnumber);
 //        //차량 번호 받아오기
 
 

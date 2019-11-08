@@ -84,7 +84,7 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     int mDSI_height, mDSI_width;
     private EditText mCarNumberEditView;
     private Button mEditButton = null;
-
+    String resplate;
     String mCurrentPhotoPath;
     private static final String TAG = "AI_OCR >";
 
@@ -376,10 +376,11 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
     public void onClickRegisterBtn(View view) {
 
         // "차량등록" 클릭시 등록화면으로 이동
-        Intent registerIntent = new Intent(RecognizerAIActivity.this, CarInsert.class);
+
         // 인식결과 insert 화면으로 보내기
         //registerIntent.putExtra("차번호", carNumber);
-
+        Intent registerIntent = new Intent(RecognizerAIActivity.this, CarInsert.class);
+        registerIntent.putExtra("차번호", resplate);
         RecognizerAIActivity.this.startActivity(registerIntent);
         Log.d(TAG,"onClickCameraFinishBtn started in RecognizerAIActivity");
     }
@@ -473,7 +474,21 @@ public class RecognizerAIActivity extends AppCompatActivity implements SurfaceHo
                 save(bytes); //파일저장
                 uploadFile(mCurrentPhotoPath); //업로드
 
-                new MakeNetworkCall().execute("http://3.16.54.45:80/carnumrec/http.php?post=1", "Post"); //Main.py
+                try {
+
+
+
+                    resplate = new MakeNetworkCall().execute("http://3.16.54.45:80/carnumrec/http.php?post=1", "Post").get(); //Main.py
+
+
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+
+                }
+
+//                new MakeNetworkCall().execute("http://3.16.54.45:80/carnumrec/http.php?post=1", "Post"); //Main.py
 //                new MakeNetworkCall().execute("http://3.16.54.45:80/http.php?post=1", "Post"); //car_non.py
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
